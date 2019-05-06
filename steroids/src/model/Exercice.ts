@@ -5,4 +5,10 @@ export default class Exercice {
     name: string;
     series: Serie[];
     comment: string;
+
+    constructor(name: string) {
+        this.name = name;
+        this.series = new Array<Serie>();
+        this.comment = '';
+    }
 }

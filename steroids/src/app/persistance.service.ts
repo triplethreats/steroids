@@ -3,6 +3,7 @@ import IApiClient from 'src/model/IApiClient';
 import MockApiClient from 'src/model/MockApiClient';
 import Session from 'src/model/Session';
 import { Observable, Observer } from 'rxjs';
+import Exercice from 'src/model/Exercice';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +17,14 @@ export class PersistanceService {
   }
 
   getAllSessions(): Observable<Session[]> {
-    return Observable.create((observer: Observer<Session[]>) => {
-      observer.next(this.apiClient.getAllSessions());
-      observer.complete();
-    });
+    return this.apiClient.getAllSessions();
   }
 
   createSession(session: Session) {
-    this.apiClient.createSession(session);
+    this.apiClient.createSession(session).subscribe();
+  }
+
+  addExercice(exercice: Exercice, session: Session) {
+    this.apiClient.addExercice(exercice, session).subscribe();
   }
 }
