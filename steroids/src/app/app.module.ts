@@ -4,6 +4,11 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SessionsListComponent } from './sessions-list/sessions-list.component';
+import { Routes, RouterModule } from '@angular/router';
+
+const appRoutes: Routes = [
+  { path: 'sessions', component: SessionsListComponent }
+];
 
 @NgModule({
   declarations: [
@@ -11,6 +16,10 @@ import { SessionsListComponent } from './sessions-list/sessions-list.component';
     SessionsListComponent
   ],
   imports: [
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: true } // <-- debugging purposes only
+    ),
     BrowserModule,
     AppRoutingModule
   ],

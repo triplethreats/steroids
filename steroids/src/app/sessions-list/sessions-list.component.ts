@@ -10,10 +10,12 @@ export class SessionsListComponent implements OnInit {
   sessions =
   [
     {
+      id: 1,
       name: 'Pec',
       date: Date.now,
       exercices: [
         {
+          id: 1,
           name: 'Développé couché',
           series: [],
           comment: 'RAS'
@@ -21,10 +23,12 @@ export class SessionsListComponent implements OnInit {
       ]
     },
     {
+      id: 2,
       name: 'Dos',
       date: Date.now,
       exercices: [
         {
+          id: 2,
           name: 'Poulie',
           series: [],
           comment: 'Ce n\'était pas aisé...'

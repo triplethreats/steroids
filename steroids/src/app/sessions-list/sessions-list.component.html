@@ -1,5 +1,5 @@
 <ul>
   <li *ngFor="let session of sessions">
-    <p>{{ session.name }}</p>
+    <a [routerLink]="['/sessions', session.id]">{{ session.name }}</a>
   </li>
 </ul>
