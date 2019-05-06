@@ -1,0 +1,15 @@
+<h1>{{session.name}}</h1>
+<ul>
+  <li *ngFor="let exercice of session.exercices">
+    <a>{{ exercice.name }}</a>
+    <ul>
+      <li *ngFor="let series of exercice.series">
+        Repetition: {{ series.repetition }}
+        Weight: {{ series.weight }}
+        Rating: {{ series.rating }}
+      </li>
+      <li>
+        <a>Remarque: {{ exercice.comment }}</a></li>
+    </ul>
+  </li>
+</ul>

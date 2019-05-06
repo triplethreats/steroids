@@ -9,17 +9,20 @@ import { SessionCreateComponent } from './session-create/session-create.componen
 import { Routes, RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { SessionComponent } from './session/session.component';
 
 const appRoutes: Routes = [
   { path: 'sessions', component: SessionsListComponent },
-  { path: 'sessions/create', component : SessionCreateComponent }
+  { path: 'sessions2', component: SessionComponent },
+  { path: 'sessions/create', component: SessionCreateComponent }
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     SessionsListComponent,
-    SessionCreateComponent
+    SessionCreateComponent,
+    SessionComponent
   ],
   imports: [
     RouterModule.forRoot(
