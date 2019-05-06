@@ -21,4 +21,8 @@ export class PersistanceService {
       observer.complete();
     });
   }
+
+  createSession(session: Session) {
+    this.apiClient.createSession(session);
+  }
 }

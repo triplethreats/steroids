@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Exercice from 'src/model/Exercice';
 import { PersistanceService } from '../persistance.service';
+import Session from 'src/model/Session';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-session-create',
@@ -11,8 +13,12 @@ import { PersistanceService } from '../persistance.service';
 export class SessionCreateComponent implements OnInit {
   sessionForm : FormGroup;
 
-  constructor(private fb: FormBuilder, private persistance: PersistanceService) {
-    this.sessionForm = this.fb.group({
+  constructor(
+    private fb: FormBuilder,
+    private persistance: PersistanceService,
+    private router: Router)
+    {
+      this.sessionForm = this.fb.group({
       name: ['', Validators.required ]
     });
   }
@@ -22,10 +28,8 @@ export class SessionCreateComponent implements OnInit {
 
   createSession(){
     const formModel = this.sessionForm.value;
-    const newSession = {
-      name: formModel.name,
-      date: Date.now
-    }
+    this.persistance.createSession(new Session(formModel.name));
+    this.router.navigate(['/sessions']);
   }
 
 }
