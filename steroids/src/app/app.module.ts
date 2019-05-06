@@ -9,6 +9,7 @@ import { SessionCreateComponent } from './session-create/session-create.componen
 import { Routes, RouterModule } from '@angular/router';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { AddExerciceComponent } from './add-exercice/add-exercice.component';
 
 const appRoutes: Routes = [
   { path: 'sessions', component: SessionsListComponent },
@@ -19,7 +20,8 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     SessionsListComponent,
-    SessionCreateComponent
+    SessionCreateComponent,
+    AddExerciceComponent
   ],
   imports: [
     RouterModule.forRoot(
