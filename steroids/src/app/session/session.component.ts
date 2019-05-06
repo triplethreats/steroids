@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Session from 'src/model/Session';
+import { PersistanceService } from '../persistance.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-session',
@@ -8,28 +10,12 @@ import Session from 'src/model/Session';
 })
 export class SessionComponent implements OnInit {
 
-  session: Session = {
-    id: 1,
-    name: 'Pec',
-    date: new Date(),
-    exercices: [
-      {
-        id: 1,
-        name: 'Développé couché',
-        series: [
-          {
-            id: 3,
-            repetition: 3,
-            weight: 4,
-            rating: 5,
-          }],
-        comment: 'Ce n\'était pas aisé...'
-      }
-    ]
-  }
-  constructor() { }
+  session: Session;
+  constructor(private persistanceService: PersistanceService, private router: ActivatedRoute) { }
 
   ngOnInit() {
-  }
+    this.router.params.subscribe(parametre => { this.persistanceService.getOneSession(Number(parametre["id"])).subscribe(sessio => { this.session = sessio; }) });
 
+
+  }
 }
