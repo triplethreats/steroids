@@ -9,7 +9,8 @@ import { SessionCreateComponent } from './session-create/session-create.componen
 import { Routes, RouterModule } from '@angular/router';
 
 const appRoutes: Routes = [
-  { path: 'sessions', component: SessionsListComponent }
+  { path: 'sessions', component: SessionsListComponent },
+  { path: 'sessions/create', component : SessionCreateComponent }
 ];
 
 @NgModule({
