@@ -1,0 +1,11 @@
+<h2>Session</h2>
+<h3><i>Create a new Session</i></h3>
+<form [formGroup]="sessionForm" (ngSubmit)="createSession()">
+  <div class="form-group">
+    <label class="center-block">Name :
+      <input class="form-control" formControlName="name">
+    </label>
+    <br />
+    <button class="btn btn-success" [disabled]="sessionForm.invalid" type="submit">Save</button>
+  </div>
+</form>
