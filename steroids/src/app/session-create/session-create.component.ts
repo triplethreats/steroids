@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import Exercice from 'src/model/Exercice';
+import { PersistanceService } from '../persistance.service';
 
 @Component({
   selector: 'app-session-create',
@@ -10,7 +11,7 @@ import Exercice from 'src/model/Exercice';
 export class SessionCreateComponent implements OnInit {
   sessionForm : FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private persistance: PersistanceService) {
     this.sessionForm = this.fb.group({
       name: ['', Validators.required ]
     });
