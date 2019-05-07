@@ -8,6 +8,7 @@ import { PersistanceService } from '../persistance.service';
   styleUrls: ['./add-exercice.component.css']
 })
 export class AddExerciceComponent implements OnInit {
+
   exercices: Exercice[];
 
   constructor(private persistance: PersistanceService) { }
@@ -17,8 +18,8 @@ export class AddExerciceComponent implements OnInit {
   }
 
   updateExercices() {
-    // this.persistance.getAllExercices().subscribe(
-    //   exercices => this.exercices = exercices);
+    this.persistance.getAllExercicesTemplates().subscribe(exercices =>
+      this.exercices = exercices);
   }
 
 }

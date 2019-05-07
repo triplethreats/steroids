@@ -27,6 +27,10 @@ export class PersistanceService {
     this.apiClient.createSession(session).subscribe();
   }
 
+  getAllExercicesTemplates() {
+    return this.apiClient.getAllExerciceTemplates();
+  }
+
   addExercice(exercice: Exercice, session: Session) {
     this.apiClient.addExercice(exercice, session).subscribe();
   }
