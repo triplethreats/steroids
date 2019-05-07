@@ -14,8 +14,10 @@ export class SessionComponent implements OnInit {
   constructor(private persistanceService: PersistanceService, private router: ActivatedRoute) { }
 
   ngOnInit() {
-    this.router.params.subscribe(parametre => { this.persistanceService.getOneSession(Number(parametre["id"])).subscribe(sessio => { this.session = sessio; }) });
-
+    this.router.params.subscribe(param => {
+      this.persistanceService.getSession(Number(param.id))
+        .subscribe(session => this.session = session);
+    });
 
   }
 }

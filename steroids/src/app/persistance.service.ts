@@ -20,11 +20,8 @@ export class PersistanceService {
     return this.apiClient.getAllSessions();
   }
 
-  getOneSession(id: number): Observable<Session> {
-    return Observable.create((observer: Observer<Session>) => {
-      observer.next(this.apiClient.getSession(id));
-      observer.complete();
-    });
+  getSession(id: number): Observable<Session> {
+    return this.apiClient.getSession(id);
   }
   createSession(session: Session) {
     this.apiClient.createSession(session).subscribe();
