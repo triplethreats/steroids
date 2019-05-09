@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import IApiClient from 'src/model/IApiClient';
-import MockApiClient from 'src/model/MockApiClient';
+import IStorage from 'src/storage/IStorage';
+import MockStorage from 'src/storage/MockStorage';
 import Session from 'src/model/Session';
 import { Observable, Observer } from 'rxjs';
 import Exercice from 'src/model/Exercice';
@@ -10,10 +10,10 @@ import Exercice from 'src/model/Exercice';
 })
 export class PersistanceService {
 
-  private apiClient: IApiClient;
+  private apiClient: IStorage;
 
   constructor() {
-    this.apiClient = new MockApiClient();
+    this.apiClient = new MockStorage();
   }
 
   getAllSessions(): Observable<Session[]> {

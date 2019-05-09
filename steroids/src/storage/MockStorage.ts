@@ -1,11 +1,11 @@
-import IApiClient from './IApiClient';
-import Session from './Session';
-import Exercice from './Exercice';
-import Serie from './Serie';
+import IStorage from './IStorage';
+import Session from '../model/Session';
+import Exercice from '../model/Exercice';
+import Serie from '../model/Serie';
 import { Observable, Observer } from 'rxjs';
 import { find, first, map } from 'rxjs/operators';
 
-export default class MockApiClient implements IApiClient {
+export default class MockStorage implements IStorage {
 
     private nextSessionId = 3;
     private nextExerciceId = 3;

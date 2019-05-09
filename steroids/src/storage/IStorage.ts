@@ -1,9 +1,9 @@
-import Session from './Session';
-import Exercice from './Exercice';
-import Serie from './Serie';
+import Session from '../model/Session';
+import Exercice from '../model/Exercice';
+import Serie from '../model/Serie';
 import { Observable } from 'rxjs';
 
-export default interface IApiClient {
+export default interface IStorage {
     getAllSessions(): Observable<Session[]>;
     getSession(id: number): Observable<Session>;
     createSession(session: Session): Observable<void>;
