@@ -4,34 +4,35 @@ import MockStorage from 'src/storage/MockStorage';
 import Session from 'src/model/Session';
 import { Observable, Observer } from 'rxjs';
 import Exercice from 'src/model/Exercice';
+import IndexedDbStorage from 'src/storage/IndexedDbStorage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersistanceService {
 
-  private apiClient: IStorage;
+  private storage: IStorage;
 
   constructor() {
-    this.apiClient = new MockStorage();
+    this.storage = new IndexedDbStorage();
   }
 
   getAllSessions(): Observable<Session[]> {
-    return this.apiClient.getAllSessions();
+    return this.storage.getAllSessions();
   }
 
   getSession(id: number): Observable<Session> {
-    return this.apiClient.getSession(id);
+    return this.storage.getSession(id);
   }
   createSession(session: Session) {
-    this.apiClient.createSession(session).subscribe();
+    this.storage.createSession(session).subscribe();
   }
 
   getAllExercicesTemplates() {
-    return this.apiClient.getAllExerciceTemplates();
+    return this.storage.getAllExerciceTemplates();
   }
 
   addExercice(exercice: Exercice, session: Session) {
-    this.apiClient.addExercice(exercice, session).subscribe();
+    this.storage.addExercice(exercice, session).subscribe();
   }
 }
