@@ -17,8 +17,8 @@ export class SessionCreateComponent implements OnInit {
     private fb: FormBuilder,
     private persistance: PersistanceService,
     private router: Router)
-    {
-      this.sessionForm = this.fb.group({
+  {
+    this.sessionForm = this.fb.group({
       name: ['', Validators.required ]
     });
   }
@@ -26,7 +26,7 @@ export class SessionCreateComponent implements OnInit {
   ngOnInit() {
   }
 
-  createSession(){
+  createSession() {
     const formModel = this.sessionForm.value;
     this.persistance.createSession(new Session(formModel.name));
     this.router.navigate(['/sessions']);

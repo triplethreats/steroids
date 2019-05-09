@@ -1,4 +1,4 @@
-<select>
-  <option ng-repeat="exercice in exercices">{{exercice.name}}</option>
+<select [(ngModel)]="selectedExercice">
+  <option *ngFor="let exercice of exercices" [ngValue]="exercice">{{exercice.name}}</option>
 </select> 
-<button mat-mini-fab color="primary">+</button>
+<button (click)="addExercice()">+</button>
