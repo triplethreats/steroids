@@ -13,9 +13,9 @@ import { AddExerciceComponent } from './add-exercice/add-exercice.component';
 import { SessionComponent } from './session/session.component';
 
 const appRoutes: Routes = [
-  { path: 'sessions', component: SessionsListComponent },
-  { path: 'sessions/:id', component: SessionComponent },
-  { path: 'sessions/create', component: SessionCreateComponent }
+  { path: 'sessions',         component: SessionsListComponent },
+  { path: 'sessions/create',  component: SessionCreateComponent },
+  { path: 'sessions/:id',     component: SessionComponent },
 ];
 
 @NgModule({
