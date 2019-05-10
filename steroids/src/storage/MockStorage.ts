@@ -12,34 +12,39 @@ export default class MockStorage implements IStorage {
     private nextSerieId = 1;
 
     private sessions: Session[] =
-    [
-        {
-            id: 1,
-            name: 'Pec',
-            date: new Date(),
-            exercices: [
-                {
-                    id: 1,
-                    name: 'Développé couché',
-                    series: [],
-                    comment: 'RAS'
-                }
-            ]
-        },
-        {
-            id: 2,
-            name: 'Dos',
-            date: new Date(),
-            exercices: [
-                {
-                    id: 2,
-                    name: 'Poulie',
-                    series: [],
-                    comment: 'Ce n\'était pas aisé...'
-                }
-            ]
-        }
-    ];
+        [
+            {
+                id: 1,
+                name: 'Pec',
+                date: new Date(),
+                exercices: [
+                    {
+                        id: 1,
+                        name: 'Développé couché',
+                        series: [{
+                            id: 5,
+                            repetition: 20,
+                            weight: 30,
+                            rating: 3
+                        }],
+                        comment: 'RAS'
+                    }
+                ]
+            },
+            {
+                id: 2,
+                name: 'Dos',
+                date: new Date(),
+                exercices: [
+                    {
+                        id: 2,
+                        name: 'Poulie',
+                        series: [],
+                        comment: 'Ce n\'était pas aisé...'
+                    }
+                ]
+            }
+        ];
 
     getAllSessions(): Observable<Session[]> {
         return Observable.create((observer: Observer<Session[]>) => {
@@ -71,16 +76,18 @@ export default class MockStorage implements IStorage {
     }
 
     getExercice(id: number): Observable<Exercice> {
-        return this.getAllSessions().pipe(
-            map(sessions => {
-                sessions.forEach(session => {
+        return Observable.create((observer: Observer<Exercice>) => {
+            this.getAllSessions().subscribe((sessions: Session[]) => {
+                sessions.forEach((session: Session) => {
                     const exercice = session.exercices.find(e => e.id === id);
                     if (exercice !== undefined) {
-                        return exercice;
+                        observer.next(exercice);
+                        return;
                     }
                 });
-                return undefined;
-            }));
+                observer.complete();
+            });
+        });
     }
 
     addSerie(serie: Serie, exercice: Exercice): Observable<void> {
