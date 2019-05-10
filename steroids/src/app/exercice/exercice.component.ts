@@ -17,10 +17,10 @@ export class ExerciceComponent implements OnInit {
   ngOnInit() {
 
     this.router.params.subscribe(param => {
-      this.persistanceService.getSeries(1)
-        .subscribe(exercic => {
-          console.log(exercic);
-          this.exercice = exercic;
+      this.persistanceService.getSeries('1')
+        .subscribe(exercice => {
+          console.log(exercice);
+          this.exercice = exercice;
         });
     });
   }
