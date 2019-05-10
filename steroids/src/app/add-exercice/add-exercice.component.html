@@ -1,4 +1,10 @@
-<select [(ngModel)]="selectedExercice">
-  <option *ngFor="let exercice of exercices" [ngValue]="exercice">{{exercice.name}}</option>
-</select> 
-<button (click)="addExercice()">+</button>
+<form [formGroup]="exerciseForm" (ngSubmit)="addExercice()">
+  <select formControlName="exerciseControl">
+    <option value="" disabled>Selectionner un Exercice</option>
+    <option *ngFor="let exercice of exercices" [ngValue]="exercice">{{exercice.name}}</option>
+  </select>
+  <label>Remarque:
+    <input formControlName="remarque">
+  </label>
+  <button [disabled]="exerciseForm.invalid" type="submit">+</button>
+</form>
