@@ -28,7 +28,7 @@ export class SessionCreateComponent implements OnInit {
 
   createSession() {
     const formModel = this.sessionForm.value;
-    this.persistance.createSession(new Session(formModel.name));
+    this.persistance.createSession(formModel.name).subscribe();
     this.router.navigate(['/sessions']);
   }
 

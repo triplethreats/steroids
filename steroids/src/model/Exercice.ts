@@ -1,7 +1,7 @@
 import Serie from './Serie';
 
 export default class Exercice {
-    id?: string;
+    id: string;
     name: string;
     series: Serie[];
     comment: string;

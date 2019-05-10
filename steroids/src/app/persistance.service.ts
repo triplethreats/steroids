@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import IStorage from 'src/storage/IStorage';
-import MockStorage from 'src/storage/MockStorage';
 import Session from 'src/model/Session';
 import { Observable, Observer } from 'rxjs';
 import Exercice from 'src/model/Exercice';
 import IndexedDbStorage from 'src/storage/IndexedDbStorage';
+import Serie from 'src/model/Serie';
 
 @Injectable({
   providedIn: 'root'
@@ -25,19 +25,23 @@ export class PersistanceService {
     return this.storage.getSession(id);
   }
 
-  createSession(session: Session) {
-    this.storage.createSession(session).subscribe();
+  createSession(name: string): Observable<Session> {
+    return this.storage.createSession(name);
   }
 
   getAllExercicesTemplates() {
     return this.storage.getAllExerciceTemplates();
   }
 
-  addExercice(exercice: Exercice, session: Session) {
-    this.storage.addExercice(exercice, session).subscribe();
+  addExercice(sessionId: string, name: string): Observable<Exercice> {
+    return this.storage.addExercice(sessionId, name);
   }
 
   getSeries(id: string): Observable<Exercice> {
     return this.storage.getExercice(id);
+  }
+
+  addSerie(exerciceId: string, repetition: number, weight: number, rating: number): Observable<Serie> {
+    return this.storage.addSerie(exerciceId, repetition, weight, rating);
   }
 }

@@ -10,9 +10,7 @@ import Serie from 'src/model/Serie';
   styleUrls: ['./add-serie.component.css']
 })
 export class AddSerieComponent implements OnInit {
-  serieForm : FormGroup;
-
-  serieObject : Serie;
+  serieForm: FormGroup;
 
   @Input()
   exercice: Exercice;
@@ -29,9 +27,9 @@ export class AddSerieComponent implements OnInit {
   }
 
   addSerie() {
-    this.serieObject.repetition = this.serieForm.value.repetitions;
-    this.serieObject.weight = this.serieForm.value.weight;
-    this.serieObject.rating = this.serieForm.value.rating;
+    const repetition = this.serieForm.value.repetitions;
+    const weight = this.serieForm.value.weight;
+    const rating = this.serieForm.value.rating;
+    this.persistance.addSerie(this.exercice.id, repetition, weight, rating);
   }
-
 }

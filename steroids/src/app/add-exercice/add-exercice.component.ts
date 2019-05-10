@@ -35,9 +35,9 @@ export class AddExerciceComponent implements OnInit {
   }
 
   addExercice() {
-    const exerciceObject = this.exerciseForm.value.exerciseControl;
-    exerciceObject.comment = this.exerciseForm.value.remarque;
-    this.persistance.addExercice(exerciceObject, this.session);
+    const exercice = this.exerciseForm.value.exerciseControl;
+    exercice.comment = this.exerciseForm.value.remarque;
+    this.persistance.addExercice(this.session.id, exercice.name).subscribe();
   }
 
 }

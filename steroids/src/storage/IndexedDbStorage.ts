@@ -84,13 +84,13 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
-    createSession(session: Session): Observable<void> {
+    createSession(name: string): Observable<Session> {
         return Observable.create((observer: Observer<void>) => {
             this.open().subscribe((db: IDBDatabase) => {
-                session.id = uuid();
+                const id = uuid();
                 const transaction = db.transaction(['sessions'], 'readwrite');
                 const sessionsStore = transaction.objectStore('sessions');
-                const request = sessionsStore.add(session, session.id);
+                const request = sessionsStore.add(new Session(id, name), id);
                 request.onsuccess = _ => {
                     observer.complete();
                 };
@@ -102,15 +102,17 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
-    addExercice(exercice: Exercice, session: Session): Observable<void> {
-        return Observable.create((observer: Observer<void>) => {
-            this.getSession(session.id).subscribe(dbSession => {
-                exercice.id = uuid();
-                dbSession.exercices.push(exercice);
+    addExercice(sessionId: string, name: string): Observable<Exercice> {
+        return Observable.create((observer: Observer<Exercice>) => {
+            this.getSession(sessionId).subscribe(session => {
+                const id = uuid();
+                const exercice = new Exercice(id, name);
+                session.exercices.push(exercice);
                 this.open().subscribe(db => {
                     const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
-                    const request = store.put(dbSession, dbSession.id);
+                    const request = store.put(session, session.id);
                     request.onsuccess = _ => {
+                        observer.next(exercice);
                         observer.complete();
                     };
                     request.onerror = _ => {
@@ -138,8 +140,34 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
-    addSerie(serie: Serie, exercice: Exercice): Observable<void> {
-        throw new Error("Method not implemented.");
+    addSerie(exerciceId: string, repetition: number, weight: number, rating: number): Observable<Serie> {
+        return Observable.create((observer: Observer<Serie>) => {
+            this.getAllSessions().subscribe(sessions => {
+                for (const session of sessions) {
+                    for (const exercice of session.exercices) {
+                        if (exercice.id === exerciceId) {
+                            const id = uuid();
+                            const serie = new Serie(id, repetition, weight, rating);
+                            exercice.series.push(serie);
+                            this.open().subscribe(db => {
+                                const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
+                                const request = store.put(session, session.id);
+                                request.onsuccess = _ => {
+                                    observer.next(serie);
+                                    observer.complete();
+                                };
+                                request.onerror = _ => {
+                                    console.error(request.error);
+                                    observer.error(request.error);
+                                };
+                            });
+                            return;
+                        }
+                    }
+                }
+                observer.error('There is no exercice with ID "' + exerciceId + '"');
+            });
+        });
     }
 
     getAllExerciceTemplates(): Observable<Exercice[]> {
