@@ -1,0 +1,10 @@
+<ul>
+  <li *ngFor="let series of exercice.series">
+    <a>{{ exercice.name }}</a>
+    <ul>
+      <li>Repetition: {{ series.repetition }}</li>
+      <li>Weight: {{ series.weight }}</li>
+      <li>Rating: {{ series.rating }}</li>
+    </ul>
+  </li>
+</ul>

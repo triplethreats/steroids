@@ -34,4 +34,8 @@ export class PersistanceService {
   addExercice(exercice: Exercice, session: Session) {
     this.apiClient.addExercice(exercice, session).subscribe();
   }
+
+  getSeries(id: number): Observable<Exercice> {
+    return this.apiClient.getExercice(id);
+  }
 }

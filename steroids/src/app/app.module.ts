@@ -11,11 +11,13 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { AddExerciceComponent } from './add-exercice/add-exercice.component';
 import { SessionComponent } from './session/session.component';
+import { ExerciceComponent } from './exercice/exercice.component';
 
 const appRoutes: Routes = [
-  { path: 'sessions',         component: SessionsListComponent },
-  { path: 'sessions/create',  component: SessionCreateComponent },
-  { path: 'sessions/:id',     component: SessionComponent },
+  { path: 'sessions', component: SessionsListComponent },
+  { path: 'sessions/create', component: SessionCreateComponent },
+  { path: 'sessions/:id', component: SessionComponent },
+  { path: 'sessions/exercice/:id', component: ExerciceComponent },
 ];
 
 @NgModule({
@@ -24,7 +26,8 @@ const appRoutes: Routes = [
     SessionsListComponent,
     SessionCreateComponent,
     AddExerciceComponent,
-    SessionComponent
+    SessionComponent,
+    ExerciceComponent
   ],
   imports: [
     RouterModule.forRoot(
