@@ -26,6 +26,11 @@ export default class MockStorage implements IStorage {
                             repetition: 20,
                             weight: 30,
                             rating: 3
+                        },{
+                            id: 2,
+                            repetition: 20,
+                            weight: 30,
+                            rating: 3
                         }],
                         comment: 'RAS'
                     }
