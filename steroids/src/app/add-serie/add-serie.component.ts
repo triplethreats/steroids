@@ -20,7 +20,8 @@ export class AddSerieComponent implements OnInit {
   constructor(private persistance: PersistanceService, private fb: FormBuilder) {
     this.serieForm = this.fb.group({
       repetitions: ['', [Validators.required]],
-      weight: ['', [Validators.required]]
+      weight: ['', [Validators.required]],
+      rating: ['']
       })
   }
 
