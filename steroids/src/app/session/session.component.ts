@@ -15,7 +15,7 @@ export class SessionComponent implements OnInit {
 
   ngOnInit() {
     this.router.params.subscribe(param => {
-      this.persistanceService.getSession(Number(param.id))
+      this.persistanceService.getSession(param.id)
         .subscribe(session => this.session = session);
     });
 

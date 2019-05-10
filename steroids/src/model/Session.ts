@@ -1,7 +1,7 @@
 import Exercice from './Exercice';
 
 export default class Session {
-    id?: number;
+    id?: string;
     name: string;
     date: Date;
     exercices: Exercice[];

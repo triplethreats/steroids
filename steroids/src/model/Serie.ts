@@ -1,5 +1,5 @@
 export default class Serie {
-    id?: number;
+    id?: string;
     repetition: number;
     weight: number;
     rating: number;

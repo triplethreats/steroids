@@ -21,9 +21,10 @@ export class PersistanceService {
     return this.storage.getAllSessions();
   }
 
-  getSession(id: number): Observable<Session> {
+  getSession(id: string): Observable<Session> {
     return this.storage.getSession(id);
   }
+
   createSession(session: Session) {
     this.storage.createSession(session).subscribe();
   }
