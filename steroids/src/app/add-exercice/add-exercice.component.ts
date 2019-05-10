@@ -10,7 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./add-exercice.component.css']
 })
 export class AddExerciceComponent implements OnInit {
-  exerciseForm : FormGroup;
+  exerciseForm: FormGroup;
 
   @Input()
   session: Session;
@@ -19,8 +19,9 @@ export class AddExerciceComponent implements OnInit {
 
   constructor(private persistance: PersistanceService, private fb: FormBuilder) {
     this.exerciseForm = this.fb.group({
-      exerciseControl: ['', [Validators.required]]
-      })
+      exerciseControl: ['', [Validators.required]],
+      remarque: ['']
+    })
   }
 
   ngOnInit() {
@@ -34,9 +35,9 @@ export class AddExerciceComponent implements OnInit {
   }
 
   addExercice() {
-    const exercice = this.exerciseForm.value.exerciseControl;
-    console.log(exercice);
-    this.persistance.addExercice(exercice, this.session);
+    const exerciceObject = this.exerciseForm.value.exerciseControl;
+    exerciceObject.comment = this.exerciseForm.value.remarque;
+    this.persistance.addExercice(exerciceObject, this.session);
   }
 
 }
