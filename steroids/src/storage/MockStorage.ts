@@ -71,16 +71,18 @@ export default class MockStorage implements IStorage {
     }
 
     getExercice(id: number): Observable<Exercice> {
-        return this.getAllSessions().pipe(
-            map(sessions => {
-                sessions.forEach(session => {
+        return Observable.create((observer: Observer<Exercice>) => {
+            this.getAllSessions().subscribe((sessions: Session[]) => {
+                sessions.forEach((session: Session) => {
                     const exercice = session.exercices.find(e => e.id === id);
                     if (exercice !== undefined) {
-                        return exercice;
+                        observer.next(exercice);
+                        return;
                     }
                 });
-                return undefined;
-            }));
+                observer.complete();
+            });
+        });
     }
 
     addSerie(serie: Serie, exercice: Exercice): Observable<void> {
