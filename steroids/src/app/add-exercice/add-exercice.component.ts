@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import Exercice from 'src/model/Exercice';
 import { PersistanceService } from '../persistance.service';
 import Session from 'src/model/Session';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-exercice',
@@ -9,14 +10,18 @@ import Session from 'src/model/Session';
   styleUrls: ['./add-exercice.component.css']
 })
 export class AddExerciceComponent implements OnInit {
+  exerciseForm : FormGroup;
 
   @Input()
   session: Session;
 
   exercices: Exercice[];
-  selectedExercice: Exercice;
 
-  constructor(private persistance: PersistanceService) { }
+  constructor(private persistance: PersistanceService, private fb: FormBuilder) {
+    this.exerciseForm = this.fb.group({
+      exerciseControl: ['', [Validators.required]]
+      })
+  }
 
   ngOnInit() {
     this.updateExercices();
@@ -25,12 +30,13 @@ export class AddExerciceComponent implements OnInit {
   updateExercices() {
     this.persistance.getAllExercicesTemplates().subscribe(exercices => {
       this.exercices = exercices;
-      this.selectedExercice = exercices.length > 0 ? exercices[0] : undefined;
     });
   }
 
   addExercice() {
-    this.persistance.addExercice(this.selectedExercice, this.session);
+    const exercice = this.exerciseForm.value.exerciseControl;
+    console.log(exercice);
+    this.persistance.addExercice(exercice, this.session);
   }
 
 }
