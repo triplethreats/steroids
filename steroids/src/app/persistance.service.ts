@@ -33,6 +33,10 @@ export class PersistanceService {
     return this.storage.getAllExerciceTemplates();
   }
 
+  getExercice(id: string): Observable<Exercice> {
+    return this.storage.getExercice(id);
+  }
+
   addExercice(sessionId: string, name: string): Observable<Exercice> {
     return this.storage.addExercice(sessionId, name);
   }

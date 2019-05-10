@@ -18,7 +18,7 @@ const appRoutes: Routes = [
   { path: 'sessions', component: SessionsListComponent },
   { path: 'sessions/create', component: SessionCreateComponent },
   { path: 'sessions/:id', component: SessionComponent },
-  { path: 'sessions/exercice/:id', component: ExerciceComponent },
+  { path: 'exercices/:id', component: ExerciceComponent },
 ];
 
 @NgModule({

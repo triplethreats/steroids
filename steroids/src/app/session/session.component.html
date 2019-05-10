@@ -1,13 +1,15 @@
-<h1>{{session.name}}</h1>
-<ul>
-  <li *ngFor="let exercice of session.exercices">
-    <a [routerLink]="['/sessions/exercice', exercice.id]">{{ exercice.name }}</a>
-    <ul>
-      <li>
-        <a>Remarque: {{ exercice.comment }}</a></li>
-    </ul>
-  </li>
-  <li>
-    <app-add-exercice [session]="session"></app-add-exercice>
-  </li>
-</ul>
+<div *ngIf="session">
+  <h1>{{session.name}}</h1>
+  <ul>
+    <li *ngFor="let exercice of session.exercices">
+      <a [routerLink]="['/exercices', exercice.id]">{{ exercice.name }}</a>
+      <ul>
+        <li>
+          <a>Remarque: {{ exercice.comment }}</a></li>
+      </ul>
+    </li>
+    <li>
+      <app-add-exercice [session]="session"></app-add-exercice>
+    </li>
+  </ul>
+</div>

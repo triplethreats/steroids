@@ -20,7 +20,7 @@ export class AddSerieComponent implements OnInit {
       repetitions: ['', [Validators.required]],
       weight: ['', [Validators.required]],
       rating: ['']
-      })
+    });
   }
 
   ngOnInit() {
@@ -30,6 +30,6 @@ export class AddSerieComponent implements OnInit {
     const repetition = this.serieForm.value.repetitions;
     const weight = this.serieForm.value.weight;
     const rating = this.serieForm.value.rating;
-    this.persistance.addSerie(this.exercice.id, repetition, weight, rating);
+    this.persistance.addSerie(this.exercice.id, repetition, weight, rating).subscribe();
   }
 }
