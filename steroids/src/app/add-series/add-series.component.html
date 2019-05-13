@@ -5,13 +5,13 @@
   <input type="text" formControlName="weight"><br>
   Rating: (Rate your series between 1 and 5) <br>
   <select formControlName="rating">
-    <option value="" disabled>Choose a score</option>
-    <option value="">0</option>
-    <option value="">1</option>
-    <option value="">2</option>
-    <option value="">3</option>
-    <option value="">4</option>
-    <option value="">5</option>
-  </select> 
+    <option value="0" disabled>Choose a score</option>
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
   <button [disabled]="seriesForm.invalid" type="submit">+</button>
 </form>
