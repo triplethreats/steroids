@@ -2,7 +2,7 @@ import IStorage from './IStorage';
 import { Observable, Observer, observable } from 'rxjs';
 import Session from 'src/model/Session';
 import Exercice from 'src/model/Exercice';
-import Serie from 'src/model/Serie';
+import Series from 'src/model/Series';
 import * as uuid from 'uuid/v1';
 import { EventEmitter } from '@angular/core';
 
@@ -165,20 +165,20 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
-    addSerie(exerciceId: string, repetition: number, weight: number, rating: number): Observable<Serie> {
-        return Observable.create((observer: Observer<Serie>) => {
+    addSeries(exerciceId: string, repetition: number, weight: number, rating: number): Observable<Series> {
+        return Observable.create((observer: Observer<Series>) => {
             this.getAllSessions().subscribe(sessions => {
                 for (const session of sessions) {
                     for (const exercice of session.exercices) {
                         if (exercice.id === exerciceId) {
                             const id = uuid();
-                            const serie = new Serie(id, repetition, weight, rating);
-                            exercice.series.push(serie);
+                            const series = new Series(id, repetition, weight, rating);
+                            exercice.series.push(series);
                             this.open().subscribe(db => {
                                 const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
                                 const request = store.put(session, session.id);
                                 request.onsuccess = _ => {
-                                    observer.next(serie);
+                                    observer.next(series);
                                     observer.complete();
                                     this.emitSessionsChanged();
                                 };

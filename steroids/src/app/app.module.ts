@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 import { AddExerciceComponent } from './add-exercice/add-exercice.component';
 import { SessionComponent } from './session/session.component';
 import { ExerciceComponent } from './exercice/exercice.component';
-import { AddSerieComponent } from './add-serie/add-serie.component';
+import { AddSeriesComponent } from './add-series/add-series.component';
 
 const appRoutes: Routes = [
   { path: 'sessions', component: SessionsListComponent },
@@ -29,7 +29,7 @@ const appRoutes: Routes = [
     AddExerciceComponent,
     SessionComponent,
     ExerciceComponent,
-    AddSerieComponent
+    AddSeriesComponent
   ],
   imports: [
     RouterModule.forRoot(

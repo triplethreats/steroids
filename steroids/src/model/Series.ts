@@ -1,4 +1,4 @@
-export default class Serie {
+export default class Series {
     id: string;
     repetition: number;
     weight: number;

@@ -1,13 +1,13 @@
 <div *ngIf="exercice">
   <h1>{{ exercice.name }}</h1>
   <ul>
-    <li *ngFor="let serie of exercice.series">
+    <li *ngFor="let series of exercice.series">
       <ul>
-        <li>Repetition: {{ serie.repetition }}</li>
-        <li>Weight: {{ serie.weight }}</li>
-        <li>Rating: {{ serie.rating }}</li>
+        <li>Repetition: {{ series.repetition }}</li>
+        <li>Weight: {{ series.weight }}</li>
+        <li>Rating: {{ series.rating }}</li>
       </ul>
     </li>
   </ul>
-  <app-add-serie [exercice]="exercice"></app-add-serie>
+  <app-add-series [exercice]="exercice"></app-add-series>
 </div>

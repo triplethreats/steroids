@@ -2,9 +2,9 @@ import { Injectable, EventEmitter } from '@angular/core';
 import IStorage from 'src/storage/IStorage';
 import Session from 'src/model/Session';
 import { Observable, Observer } from 'rxjs';
-import Exercice from 'src/model/Exercice';
 import IndexedDbStorage from 'src/storage/IndexedDbStorage';
-import Serie from 'src/model/Serie';
+import Exercice from 'src/model/Exercice';
+import Series from 'src/model/Series';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +50,7 @@ export class PersistanceService {
     return this.storage.getExercice(id);
   }
 
-  addSerie(exerciceId: string, repetition: number, weight: number, rating: number): Observable<Serie> {
-    return this.storage.addSerie(exerciceId, repetition, weight, rating);
+  addSerie(exerciceId: string, repetition: number, weight: number, rating: number): Observable<Series> {
+    return this.storage.addSeries(exerciceId, repetition, weight, rating);
   }
 }

@@ -1,6 +1,6 @@
 import Session from '../model/Session';
 import Exercice from '../model/Exercice';
-import Serie from '../model/Serie';
+import Series from '../model/Series';
 import { Observable } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 
@@ -17,5 +17,5 @@ export default interface IStorage {
     getExercice(id: string): Observable<Exercice>;
     addExercice(sessionId: string, name: string): Observable<Exercice>;
 
-    addSerie(exerciceId: string, repetition: number, weight: number, rating: number): Observable<Serie>;
+    addSeries(exerciceId: string, repetition: number, weight: number, rating: number): Observable<Series>;
 }

@@ -2,21 +2,21 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PersistanceService } from '../persistance.service';
 import Exercice from 'src/model/Exercice';
-import Serie from 'src/model/Serie';
+import Series from 'src/model/Series';
 
 @Component({
-  selector: 'app-add-serie',
-  templateUrl: './add-serie.component.html',
-  styleUrls: ['./add-serie.component.css']
+  selector: 'app-add-series',
+  templateUrl: './add-series.component.html',
+  styleUrls: ['./add-series.component.css']
 })
-export class AddSerieComponent implements OnInit {
-  serieForm: FormGroup;
+export class AddSeriesComponent implements OnInit {
+  seriesForm: FormGroup;
 
   @Input()
   exercice: Exercice;
 
   constructor(private persistance: PersistanceService, private fb: FormBuilder) {
-    this.serieForm = this.fb.group({
+    this.seriesForm = this.fb.group({
       repetitions: ['', [Validators.required]],
       weight: ['', [Validators.required]],
       rating: ['']
@@ -26,10 +26,10 @@ export class AddSerieComponent implements OnInit {
   ngOnInit() {
   }
 
-  addSerie() {
-    const repetition = this.serieForm.value.repetitions;
-    const weight = this.serieForm.value.weight;
-    const rating = this.serieForm.value.rating;
+  addSeries() {
+    const repetition = this.seriesForm.value.repetitions;
+    const weight = this.seriesForm.value.weight;
+    const rating = this.seriesForm.value.rating;
     this.persistance.addSerie(this.exercice.id, repetition, weight, rating).subscribe();
   }
 }
