@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SessionCreateComponent } from './session-create.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule } from '../app-routing.module';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { APP_BASE_HREF } from '@angular/common';
 
 describe('SessionCreateComponent', () => {
   let component: SessionCreateComponent;
@@ -8,7 +13,17 @@ describe('SessionCreateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SessionCreateComponent ]
+      declarations: [ SessionCreateComponent ],
+      imports: [ ReactiveFormsModule, AppRoutingModule ],
+      providers: [
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            params: of({ id: 'test' })
+          }
+        },
+        { provide: APP_BASE_HREF, useValue: '/' }
+      ]
     })
     .compileComponents();
   }));
