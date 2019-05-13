@@ -20,6 +20,11 @@ export class SessionsListComponent implements OnInit {
     this.updateSessions();
   }
 
+  delete(idSession: string) {
+    this.persistance.deleteSession(idSession);
+    this.updateSessions();
+
+  }
   updateSessions() {
     this.persistance.getAllSessions().subscribe(
       sessions => this.sessions = sessions);

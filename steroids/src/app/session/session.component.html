@@ -3,6 +3,7 @@
   <ul>
     <li *ngFor="let exercice of session.exercices">
       <a [routerLink]="['/exercices', exercice.id]">{{ exercice.name }}</a>
+      <button (click)="delete(exercice.id)">Delete</button>
       <ul>
         <li>
           <a>Remarque: {{ exercice.comment }}</a></li>
