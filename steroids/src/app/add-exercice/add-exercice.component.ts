@@ -10,18 +10,20 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./add-exercice.component.css']
 })
 export class AddExerciceComponent implements OnInit {
+
   exerciseForm: FormGroup;
 
   @Input()
   session: Session;
 
-  exercices: Exercice[];
+  exerciceTemplates: Exercice[];
 
   constructor(private persistance: PersistanceService, private fb: FormBuilder) {
+    this.persistance.exerciceTemplatesChanged.subscribe(templates => this.exerciceTemplates = templates);
     this.exerciseForm = this.fb.group({
       exerciseControl: ['', [Validators.required]],
       remarque: ['']
-    })
+    });
   }
 
   ngOnInit() {
@@ -30,7 +32,7 @@ export class AddExerciceComponent implements OnInit {
 
   updateExercices() {
     this.persistance.getAllExercicesTemplates().subscribe(exercices => {
-      this.exercices = exercices;
+      this.exerciceTemplates = exercices;
     });
   }
 

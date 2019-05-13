@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import Session from 'src/model/Session';
 import { PersistanceService } from '../persistance.service';
 import { ActivatedRoute } from '@angular/router';
@@ -10,14 +10,26 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SessionComponent implements OnInit {
 
+  private sessionId: string;
+
+  @Input()
   session: Session;
-  constructor(private persistanceService: PersistanceService, private router: ActivatedRoute) { }
+
+  constructor(private persistanceService: PersistanceService, private router: ActivatedRoute) {
+    this.persistanceService.sessionsChanged.subscribe(_ => {
+      this.updateSession();
+    });
+  }
 
   ngOnInit() {
     this.router.params.subscribe(param => {
-      this.persistanceService.getSession(param.id)
-        .subscribe(session => this.session = session);
+      this.sessionId = param.id;
+      this.updateSession();
     });
+  }
 
+  private updateSession() {
+    this.persistanceService.getSession(this.sessionId)
+      .subscribe(session => this.session = session);
   }
 }

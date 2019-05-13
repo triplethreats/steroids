@@ -10,16 +10,24 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ExerciceComponent implements OnInit {
 
+  exerciceId: string;
+  @Input()
   exercice: Exercice;
 
-  constructor(private persistance: PersistanceService, private router: ActivatedRoute) { }
+  constructor(private persistance: PersistanceService, private router: ActivatedRoute) {
+    this.persistance.sessionsChanged.subscribe(_ => this.updateExercice());
+  }
 
   ngOnInit() {
     this.router.params.subscribe(params => {
-      this.persistance.getExercice(params.id).subscribe(exercice => {
-          this.exercice = exercice;
-      });
+      this.exerciceId = params.id;
+      this.updateExercice();
     });
   }
 
+  private updateExercice() {
+    this.persistance.getExercice(this.exerciceId).subscribe(exercice => {
+      this.exercice = exercice;
+    });
+  }
 }

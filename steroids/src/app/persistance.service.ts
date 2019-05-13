@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import IStorage from 'src/storage/IStorage';
 import Session from 'src/model/Session';
 import { Observable, Observer } from 'rxjs';
@@ -13,8 +13,13 @@ export class PersistanceService {
 
   private storage: IStorage;
 
+  sessionsChanged: EventEmitter<Session[]>;
+  exerciceTemplatesChanged: EventEmitter<Exercice[]>;
+
   constructor() {
     this.storage = new IndexedDbStorage();
+    this.sessionsChanged = this.storage.sessionsChanged;
+    this.exerciceTemplatesChanged = this.storage.exerciceTemplatesChanged;
   }
 
   getAllSessions(): Observable<Session[]> {

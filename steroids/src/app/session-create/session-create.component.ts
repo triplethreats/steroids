@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./session-create.component.css']
 })
 export class SessionCreateComponent implements OnInit {
-  sessionForm : FormGroup;
+  sessionForm: FormGroup;
 
   constructor(
     private fb: FormBuilder,

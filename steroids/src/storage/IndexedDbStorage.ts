@@ -4,10 +4,19 @@ import Session from 'src/model/Session';
 import Exercice from 'src/model/Exercice';
 import Serie from 'src/model/Serie';
 import * as uuid from 'uuid/v1';
+import { EventEmitter } from '@angular/core';
 
 export default class IndexedDbStorage implements IStorage {
 
     private version = 2;
+
+    sessionsChanged: EventEmitter<Session[]>;
+    exerciceTemplatesChanged: EventEmitter<Exercice[]>;
+
+    constructor() {
+        this.sessionsChanged = new EventEmitter<Session[]>();
+        this.exerciceTemplatesChanged = new EventEmitter<Exercice[]>();
+    }
 
     private upgradeFunctions: Map<number, ((db: IDBDatabase) => void)> = new Map<number, ((db: IDBDatabase) => void)>([
         [1, (db: IDBDatabase) => {
@@ -22,7 +31,7 @@ export default class IndexedDbStorage implements IStorage {
         }]
     ]);
 
-    open(): Observable<IDBDatabase> {
+    private open(): Observable<IDBDatabase> {
         return Observable.create((observer: Observer<IDBDatabase>) => {
             const request = window.indexedDB.open('steroids', this.version);
             request.onupgradeneeded = (event: IDBVersionChangeEvent) => {
@@ -40,11 +49,23 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
-    upgrade(oldVersion: number, newVersion: number, db: IDBDatabase) {
+    private upgrade(oldVersion: number, newVersion: number, db: IDBDatabase) {
         while (oldVersion < newVersion) {
             oldVersion++;
             this.upgradeFunctions.get(oldVersion)(db);
         }
+    }
+
+    private emitSessionsChanged() {
+        this.getAllSessions().subscribe(sessions => {
+            this.sessionsChanged.emit(sessions);
+        });
+    }
+
+    private emitExerciceTemplatesChanged() {
+        this.getAllExerciceTemplates().subscribe(templates => {
+            this.exerciceTemplatesChanged.emit(templates);
+        });
     }
 
     getAllSessions(): Observable<Session[]> {
@@ -88,11 +109,14 @@ export default class IndexedDbStorage implements IStorage {
         return Observable.create((observer: Observer<void>) => {
             this.open().subscribe((db: IDBDatabase) => {
                 const id = uuid();
+                const session = new Session(id, name);
                 const transaction = db.transaction(['sessions'], 'readwrite');
                 const sessionsStore = transaction.objectStore('sessions');
-                const request = sessionsStore.add(new Session(id, name), id);
+                const request = sessionsStore.add(session, id);
                 request.onsuccess = _ => {
+                    observer.next();
                     observer.complete();
+                    this.emitSessionsChanged();
                 };
                 request.onerror = _ => {
                     console.error(request.error);
@@ -114,6 +138,7 @@ export default class IndexedDbStorage implements IStorage {
                     request.onsuccess = _ => {
                         observer.next(exercice);
                         observer.complete();
+                        this.emitSessionsChanged();
                     };
                     request.onerror = _ => {
                         observer.error(request.error);
@@ -155,6 +180,7 @@ export default class IndexedDbStorage implements IStorage {
                                 request.onsuccess = _ => {
                                     observer.next(serie);
                                     observer.complete();
+                                    this.emitSessionsChanged();
                                 };
                                 request.onerror = _ => {
                                     console.error(request.error);
@@ -193,6 +219,9 @@ export default class IndexedDbStorage implements IStorage {
         const id = uuid();
         const exercice = new Exercice(id, name);
         const request = store.add(exercice, id);
+        request.onsuccess = _ => {
+            this.emitExerciceTemplatesChanged();
+        };
         request.onerror = _ => {
             console.error(request.error);
         };

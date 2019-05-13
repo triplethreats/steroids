@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PersistanceService } from '../persistance.service';
 import Session from 'src/model/Session';
 
@@ -9,9 +9,12 @@ import Session from 'src/model/Session';
 })
 export class SessionsListComponent implements OnInit {
 
+  @Input()
   sessions: Session[];
 
-  constructor(private persistance: PersistanceService) { }
+  constructor(private persistance: PersistanceService) {
+    this.persistance.sessionsChanged.subscribe(sessions => this.sessions = sessions);
+  }
 
   ngOnInit() {
     this.updateSessions();
