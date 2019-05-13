@@ -87,6 +87,27 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
+    createSession(name: string): Observable<Session> {
+        return Observable.create((observer: Observer<void>) => {
+            this.open().subscribe((db: IDBDatabase) => {
+                const id = uuid();
+                const session = new Session(id, name);
+                const transaction = db.transaction(['sessions'], 'readwrite');
+                const sessionsStore = transaction.objectStore('sessions');
+                const request = sessionsStore.add(session, id);
+                request.onsuccess = _ => {
+                    observer.next();
+                    observer.complete();
+                    this.emitSessionsChanged();
+                };
+                request.onerror = _ => {
+                    console.error(request.error);
+                    observer.error(request.error);
+                };
+            });
+        });
+    }
+
     getSession(id: string): Observable<Session> {
         return Observable.create((observer: Observer<Session>) => {
             this.open().subscribe((db: IDBDatabase) => {
@@ -105,18 +126,14 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
-    createSession(name: string): Observable<Session> {
+    deleteSession(id: string): Observable<void> {
         return Observable.create((observer: Observer<void>) => {
-            this.open().subscribe((db: IDBDatabase) => {
-                const id = uuid();
-                const session = new Session(id, name);
-                const transaction = db.transaction(['sessions'], 'readwrite');
-                const sessionsStore = transaction.objectStore('sessions');
-                const request = sessionsStore.add(session, id);
+            this.open().subscribe(db => {
+                const request = db.transaction(['sessions'], 'readwrite')
+                                  .objectStore('sessions')
+                                  .delete(id);
                 request.onsuccess = _ => {
-                    observer.next();
                     observer.complete();
-                    this.emitSessionsChanged();
                 };
                 request.onerror = _ => {
                     console.error(request.error);
@@ -161,6 +178,24 @@ export default class IndexedDbStorage implements IStorage {
                     }
                 }
                 observer.complete();
+            });
+        });
+    }
+
+    deleteExercice(id: string): Observable<void> {
+        return Observable.create((observer: Observer<void>) => {
+            this.getAllSessions().subscribe(sessions => {
+                const session = sessions.find(session =>
+                    session.exercices.find(exercice =>
+                        exercice.id === id) !== undefined);
+                if (session === undefined) {
+                    observer.error('There is no exercice with ID "' + id + '"');
+                    return;
+                }
+                session.exercices.splice(
+                    session.exercices.indexOf(session.exercices.find(exercice =>
+                        exercice.id === id)),
+                    1);
             });
         });
     }

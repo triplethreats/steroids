@@ -10,12 +10,19 @@ export default interface IStorage {
     exerciceTemplatesChanged: EventEmitter<Exercice[]>;
 
     getAllSessions(): Observable<Session[]>;
-    getSession(id: string): Observable<Session>;
     createSession(name: string): Observable<Session>;
+    getSession(id: string): Observable<Session>;
+    deleteSession(id: string): Observable<void>;
+
+    addExercice(sessionId: string, name: string): Observable<Exercice>;
+    getExercice(id: string): Observable<Exercice>;
+    deleteExercice(id: string): Observable<void>;
+
+    addSeries(
+        exerciceId: string,
+        repetition: number,
+        weight: number,
+        rating: number): Observable<Series>;
 
     getAllExerciceTemplates(): Observable<Exercice[]>;
-    getExercice(id: string): Observable<Exercice>;
-    addExercice(sessionId: string, name: string): Observable<Exercice>;
-
-    addSeries(exerciceId: string, repetition: number, weight: number, rating: number): Observable<Series>;
 }

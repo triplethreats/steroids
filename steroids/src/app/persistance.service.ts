@@ -26,31 +26,40 @@ export class PersistanceService {
     return this.storage.getAllSessions();
   }
 
-  getSession(id: string): Observable<Session> {
-    return this.storage.getSession(id);
-  }
-
   createSession(name: string): Observable<Session> {
     return this.storage.createSession(name);
   }
 
-  getAllExercicesTemplates() {
-    return this.storage.getAllExerciceTemplates();
+  getSession(id: string): Observable<Session> {
+    return this.storage.getSession(id);
   }
 
-  getExercice(id: string): Observable<Exercice> {
-    return this.storage.getExercice(id);
+  deleteSession(id: string): void {
+    this.storage.deleteSession(id).subscribe();
   }
 
   addExercice(sessionId: string, name: string): Observable<Exercice> {
     return this.storage.addExercice(sessionId, name);
   }
 
-  getSeries(id: string): Observable<Exercice> {
+  getExercice(id: string): Observable<Exercice> {
     return this.storage.getExercice(id);
   }
 
-  addSerie(exerciceId: string, repetition: number, weight: number, rating: number): Observable<Series> {
+  deleteExercice(id: string): void {
+    this.storage.deleteExercice(id);
+  }
+
+  addSerie(
+    exerciceId: string,
+    repetition: number,
+    weight: number,
+    rating: number): Observable<Series>
+  {
     return this.storage.addSeries(exerciceId, repetition, weight, rating);
+  }
+
+  getAllExercicesTemplates() {
+    return this.storage.getAllExerciceTemplates();
   }
 }
