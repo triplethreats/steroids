@@ -6,10 +6,10 @@ export default class Exercice {
     series: Series[];
     comment: string;
 
-    constructor(id: string, name: string) {
+    constructor(id: string, name: string, comment: string) {
         this.id = id;
         this.name = name;
         this.series = new Array<Series>();
-        this.comment = '';
+        this.comment = comment;
     }
 }

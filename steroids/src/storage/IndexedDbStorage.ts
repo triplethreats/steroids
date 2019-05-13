@@ -130,8 +130,8 @@ export default class IndexedDbStorage implements IStorage {
         return Observable.create((observer: Observer<void>) => {
             this.open().subscribe(db => {
                 const request = db.transaction(['sessions'], 'readwrite')
-                                  .objectStore('sessions')
-                                  .delete(id);
+                    .objectStore('sessions')
+                    .delete(id);
                 request.onsuccess = _ => {
                     observer.complete();
                 };
@@ -143,11 +143,11 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
-    addExercice(sessionId: string, name: string): Observable<Exercice> {
+    addExercice(sessionId: string, name: string, comment: string): Observable<Exercice> {
         return Observable.create((observer: Observer<Exercice>) => {
             this.getSession(sessionId).subscribe(session => {
                 const id = uuid();
-                const exercice = new Exercice(id, name);
+                const exercice = new Exercice(id, name, comment);
                 session.exercices.push(exercice);
                 this.open().subscribe(db => {
                     const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
@@ -252,7 +252,7 @@ export default class IndexedDbStorage implements IStorage {
 
     createExerciceTemplate(store: IDBObjectStore, name: string) {
         const id = uuid();
-        const exercice = new Exercice(id, name);
+        const exercice = new Exercice(id, name, '');
         const request = store.add(exercice, id);
         request.onsuccess = _ => {
             this.emitExerciceTemplatesChanged();
