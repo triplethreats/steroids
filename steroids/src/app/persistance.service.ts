@@ -38,8 +38,8 @@ export class PersistanceService {
     this.storage.deleteSession(id).subscribe();
   }
 
-  addExercice(sessionId: string, name: string): Observable<Exercice> {
-    return this.storage.addExercice(sessionId, name);
+  addExercice(sessionId: string, name: string, comment: string): Observable<Exercice> {
+    return this.storage.addExercice(sessionId, name, comment);
   }
 
   getExercice(id: string): Observable<Exercice> {
@@ -47,15 +47,18 @@ export class PersistanceService {
   }
 
   deleteExercice(id: string): void {
-    this.storage.deleteExercice(id);
+    this.storage.deleteExercice(id).subscribe();
+  }
+
+  deleteSerie(id: string): void {
+    this.storage.deleteSerie(id).subscribe();
   }
 
   addSerie(
     exerciceId: string,
     repetition: number,
     weight: number,
-    rating: number): Observable<Series>
-  {
+    rating: number): Observable<Series> {
     return this.storage.addSeries(exerciceId, repetition, weight, rating);
   }
 

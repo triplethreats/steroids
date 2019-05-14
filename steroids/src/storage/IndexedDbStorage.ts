@@ -133,8 +133,8 @@ export default class IndexedDbStorage implements IStorage {
         return Observable.create((observer: Observer<void>) => {
             this.open().subscribe(db => {
                 const request = db.transaction(['sessions'], 'readwrite')
-                                  .objectStore('sessions')
-                                  .delete(id);
+                    .objectStore('sessions')
+                    .delete(id);
                 request.onsuccess = _ => {
                     observer.complete();
                 };
@@ -146,11 +146,11 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
-    addExercice(sessionId: string, name: string): Observable<Exercice> {
+    addExercice(sessionId: string, name: string, comment: string): Observable<Exercice> {
         return Observable.create((observer: Observer<Exercice>) => {
             this.getSession(sessionId).subscribe(session => {
                 const id = uuid();
-                const exercice = new Exercice(id, name);
+                const exercice = new Exercice(id, name, comment);
                 session.exercices.push(exercice);
                 this.open().subscribe(db => {
                     const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
@@ -185,6 +185,40 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
+
+    deleteSerie(id: string): Observable<void> {
+        return Observable.create((observer: Observer<void>) => {
+            this.getAllSessions().subscribe(sessions => {
+                for (const sessionValue of sessions) {
+                    for (const exercice of sessionValue.exercices) {
+                        for (const serie of exercice.series) {
+                            if (serie.id === id) {
+                                exercice.series.splice(
+                                    exercice.series.indexOf(serie),
+                                    1);
+                                this.open().subscribe(db => {
+                                    const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
+                                    const request = store.put(sessionValue, sessionValue.id);
+                                    request.onsuccess = _ => {
+                                        observer.complete();
+                                        this.emitSessionsChanged();
+                                    };
+                                    request.onerror = _ => {
+                                        console.log(request.error);
+                                        observer.error(request.error);
+                                    };
+                                });
+                                return;
+
+                            }
+                        }
+                    }
+                }
+
+            });
+        });
+    }
+
     deleteExercice(id: string): Observable<void> {
         return Observable.create((observer: Observer<void>) => {
             this.getAllSessions().subscribe(sessions => {
@@ -199,6 +233,18 @@ export default class IndexedDbStorage implements IStorage {
                     session.exercices.indexOf(session.exercices.find(exercice =>
                         exercice.id === id)),
                     1);
+                this.open().subscribe(db => {
+                    const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
+                    const request = store.put(session, session.id);
+                    request.onsuccess = _ => {
+                        observer.complete();
+                        this.emitSessionsChanged();
+                    };
+                    request.onerror = _ => {
+                        console.log(request.error);
+                        observer.error(request.error);
+                    };
+                });
             });
         });
     }
@@ -255,7 +301,7 @@ export default class IndexedDbStorage implements IStorage {
 
     createExerciceTemplate(store: IDBObjectStore, name: string) {
         const id = uuid();
-        const exercice = new Exercice(id, name);
+        const exercice = new Exercice(id, name, '');
         const request = store.add(exercice, id);
         request.onsuccess = _ => {
             this.emitExerciceTemplatesChanged();

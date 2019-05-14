@@ -1,6 +1,7 @@
 <ul>
   <li *ngFor="let session of sessions">
     <a [routerLink]="['/sessions', session.id]">{{ session.name }}</a>
+    <button (click)="delete(session.id)">Delete</button>
   </li>
 </ul>
 <a [routerLink]="['/sessions/create']">Create session</a>
