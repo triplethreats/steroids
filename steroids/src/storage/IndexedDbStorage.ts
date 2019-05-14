@@ -182,6 +182,40 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
+
+    deleteSerie(id: string): Observable<void> {
+        return Observable.create((observer: Observer<void>) => {
+            this.getAllSessions().subscribe(sessions => {
+                for (const sessionValue of sessions) {
+                    for (const exercice of sessionValue.exercices) {
+                        for (const serie of exercice.series) {
+                            if (serie.id === id) {
+                                exercice.series.splice(
+                                    exercice.series.indexOf(serie),
+                                    1);
+                                this.open().subscribe(db => {
+                                    const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
+                                    const request = store.put(sessionValue, sessionValue.id);
+                                    request.onsuccess = _ => {
+                                        observer.complete();
+                                        this.emitSessionsChanged();
+                                    };
+                                    request.onerror = _ => {
+                                        console.log(request.error);
+                                        observer.error(request.error);
+                                    };
+                                });
+                                return;
+
+                            }
+                        }
+                    }
+                }
+
+            });
+        });
+    }
+
     deleteExercice(id: string): Observable<void> {
         return Observable.create((observer: Observer<void>) => {
             this.getAllSessions().subscribe(sessions => {

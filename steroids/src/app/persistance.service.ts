@@ -50,6 +50,10 @@ export class PersistanceService {
     this.storage.deleteExercice(id).subscribe();
   }
 
+  deleteSerie(id: string): void {
+    this.storage.deleteSerie(id).subscribe();
+  }
+
   addSerie(
     exerciceId: string,
     repetition: number,

@@ -25,6 +25,12 @@ export class ExerciceComponent implements OnInit {
     });
   }
 
+  delete(idSerie: string) {
+    this.persistance.deleteSerie(idSerie);
+    this.updateExercice();
+
+  }
+
   private updateExercice() {
     this.persistance.getExercice(this.exerciceId).subscribe(exercice => {
       this.exercice = exercice;

@@ -17,6 +17,7 @@ export default interface IStorage {
     addExercice(sessionId: string, name: string, comment: string): Observable<Exercice>;
     getExercice(id: string): Observable<Exercice>;
     deleteExercice(id: string): Observable<void>;
+    deleteSerie(id: string): Observable<void>;
 
     addSeries(
         exerciceId: string,
