@@ -47,7 +47,7 @@ export class PersistanceService {
   }
 
   deleteExercice(id: string): void {
-    this.storage.deleteExercice(id);
+    this.storage.deleteExercice(id).subscribe();
   }
 
   addSerie(

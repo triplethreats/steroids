@@ -196,6 +196,18 @@ export default class IndexedDbStorage implements IStorage {
                     session.exercices.indexOf(session.exercices.find(exercice =>
                         exercice.id === id)),
                     1);
+                this.open().subscribe(db => {
+                    const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
+                    const request = store.put(session, session.id);
+                    request.onsuccess = _ => {
+                        observer.complete();
+                        this.emitSessionsChanged();
+                    };
+                    request.onerror = _ => {
+                        console.log(request.error);
+                        observer.error(request.error);
+                    };
+                });
             });
         });
     }
