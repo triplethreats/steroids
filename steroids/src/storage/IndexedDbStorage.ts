@@ -39,8 +39,10 @@ export default class IndexedDbStorage implements IStorage {
                 this.upgrade(event.oldVersion, event.newVersion, db);
             };
             request.onsuccess = _ => {
-                observer.next(request.result);
+                const db = request.result;
+                observer.next(db);
                 observer.complete();
+                db.close();
             };
             request.onerror = _ => {
                 console.error(request.error);
@@ -75,7 +77,8 @@ export default class IndexedDbStorage implements IStorage {
                 const sessionsObjectStore = transaction.objectStore('sessions');
                 const request = sessionsObjectStore.getAll();
                 request.onsuccess = _ => {
-                    const sessions = request.result as Session[];
+                    const sessions = new Array<Session>();
+                    request.result.forEach(result => sessions.push(result));
                     observer.next(sessions);
                     observer.complete();
                 };
@@ -88,7 +91,7 @@ export default class IndexedDbStorage implements IStorage {
     }
 
     createSession(name: string): Observable<Session> {
-        return Observable.create((observer: Observer<void>) => {
+        return Observable.create((observer: Observer<Session>) => {
             this.open().subscribe((db: IDBDatabase) => {
                 const id = uuid();
                 const session = new Session(id, name);
@@ -96,7 +99,7 @@ export default class IndexedDbStorage implements IStorage {
                 const sessionsStore = transaction.objectStore('sessions');
                 const request = sessionsStore.add(session, id);
                 request.onsuccess = _ => {
-                    observer.next();
+                    observer.next(session);
                     observer.complete();
                     this.emitSessionsChanged();
                 };
@@ -260,5 +263,17 @@ export default class IndexedDbStorage implements IStorage {
         request.onerror = _ => {
             console.error(request.error);
         };
+    }
+
+    dropLocalDatabase(): Observable<void> {
+        return Observable.create((observer: Observer<void>) => {
+            const request = window.indexedDB.deleteDatabase('steroids');
+            request.onsuccess = _ => {
+                observer.complete();
+            };
+            request.onerror = _ => {
+                observer.error(request.error);
+            };
+        });
     }
 }

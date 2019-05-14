@@ -25,4 +25,6 @@ export default interface IStorage {
         rating: number): Observable<Series>;
 
     getAllExerciceTemplates(): Observable<Exercice[]>;
+
+    dropLocalDatabase(): Observable<void>;
 }

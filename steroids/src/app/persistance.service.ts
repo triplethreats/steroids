@@ -62,4 +62,8 @@ export class PersistanceService {
   getAllExercicesTemplates() {
     return this.storage.getAllExerciceTemplates();
   }
+
+  dropLocalDatabase() {
+    this.storage.dropLocalDatabase().subscribe();
+  }
 }
