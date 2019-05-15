@@ -28,11 +28,13 @@ export class SessionComponent implements OnInit {
     });
   }
 
-  delete(idExercise: string) {
-    this.persistanceService.deleteExercice(idExercise);
-    this.updateSession();
-
+  delete(idExercise: string, nameExercise: string) {
+    if(confirm("Are you sure to delete the exercise : " + nameExercise)) {
+      this.persistanceService.deleteExercice(idExercise);
+      this.updateSession();
+    }
   }
+
   private updateSession() {
     this.persistanceService.getSession(this.sessionId)
       .subscribe(session => this.session = session);

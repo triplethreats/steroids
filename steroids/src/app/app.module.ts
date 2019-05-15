@@ -18,6 +18,7 @@ const appRoutes: Routes = [
   { path: 'sessions', component: SessionsListComponent },
   { path: 'sessions/create', component: SessionCreateComponent },
   { path: 'sessions/:id', component: SessionComponent },
+  { path: 'exercises/add', component: AddExerciceComponent },
   { path: 'exercices/:id', component: ExerciceComponent },
 ];
 

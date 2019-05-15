@@ -1,0 +1,18 @@
+.cards {
+    height: 90%;
+    width: 100%;
+    overflow: auto;
+}
+.nameExercice:link {
+    text-decoration: none;
+    color: black;
+}
+
+.nameExercice:hover {
+    text-decoration: none;
+    color: grey;
+}
+.nameExercice:visited {
+    text-decoration: none;
+    color: black;
+}
