@@ -5,6 +5,7 @@
       <li *ngFor="let exercice of session.exercices" class="list-group-item">
         <a [routerLink]="['/exercices', exercice.id]" class="nameExercice">{{ exercice.name }}</a>
         <button type="button" class="btn btn-outline-danger" (click)="delete(exercice.id, exercice.name)" style="float: right;">Delete</button>
+        <a [routerLink]="['/exercices/modify', exercice.id]"><button>Edit</button></a>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
             <a>Remarque: {{ exercice.comment }}</a>
@@ -17,5 +18,3 @@
     </ul>
   </div>
 </app-sessions-list>
-   
-

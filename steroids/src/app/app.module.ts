@@ -13,6 +13,7 @@ import { AddExerciceComponent } from './add-exercice/add-exercice.component';
 import { SessionComponent } from './session/session.component';
 import { ExerciceComponent } from './exercice/exercice.component';
 import { AddSeriesComponent } from './add-series/add-series.component';
+import { ModifyExerciceComponent } from './modify-exercice/modify-exercice.component';
 
 const appRoutes: Routes = [
   { path: 'sessions', component: SessionsListComponent },
@@ -20,6 +21,7 @@ const appRoutes: Routes = [
   { path: 'sessions/:id', component: SessionComponent },
   { path: 'exercises/add', component: AddExerciceComponent },
   { path: 'exercices/:id', component: ExerciceComponent },
+  { path: 'exercices/modify/:id', component: ModifyExerciceComponent }
 ];
 
 @NgModule({
@@ -30,7 +32,8 @@ const appRoutes: Routes = [
     AddExerciceComponent,
     SessionComponent,
     ExerciceComponent,
-    AddSeriesComponent
+    AddSeriesComponent,
+    ModifyExerciceComponent
   ],
   imports: [
     RouterModule.forRoot(
