@@ -1,0 +1,13 @@
+<div *ngIf="exercice">
+  <form [formGroup]="exerciseForm" (ngSubmit)="modifyExercise()">
+    <select formControlName="exerciseControl">
+      <!-- <option [ngValue]="exercice">{{exercice.name}}</option> -->
+      <option *ngFor="let exercices of exerciceTemplates" [selected]="exercices.name == exercice.name"
+        value="{{exercices.name}}">{{exercices.name}}</option>
+    </select>
+    <label>Remarque:
+      <input formControlName="remarque">
+    </label>
+    <button [disabled]="exerciseForm.invalid" type="submit">Edit</button>
+  </form>
+</div>
