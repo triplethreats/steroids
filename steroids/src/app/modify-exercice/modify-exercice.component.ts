@@ -3,6 +3,7 @@ import { PersistanceService } from '../persistance.service';
 import { ActivatedRoute } from '@angular/router';
 import Exercice from 'src/model/Exercice';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-modify-exercice',
@@ -18,7 +19,7 @@ export class ModifyExerciceComponent implements OnInit {
   exerciceTemplates: Exercice[];
   exerciseForm: FormGroup;
 
-  constructor(private persistance: PersistanceService, private fb: FormBuilder, private router: ActivatedRoute) {
+  constructor(private persistance: PersistanceService, private fb: FormBuilder, private router: ActivatedRoute, private location: Location) {
     this.persistance.exerciceTemplatesChanged.subscribe(templates => this.exerciceTemplates = templates);
     this.exerciseForm = this.fb.group({
       exerciseControl: '',
@@ -53,6 +54,7 @@ export class ModifyExerciceComponent implements OnInit {
     const newName = this.exerciseForm.value.exerciseControl;
 
     const newRemarque = this.exerciseForm.value.remarque;
+    this.location.back();
     // ici appeler fonction update avec comme parame ancien id, newName, newRemarque
   }
 
