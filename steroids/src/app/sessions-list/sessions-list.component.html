@@ -1,7 +1,30 @@
-<ul>
-  <li *ngFor="let session of sessions">
-    <a [routerLink]="['/sessions', session.id]">{{ session.name }}</a>
-    <button (click)="delete(session.id)">Delete</button>
-  </li>
-</ul>
-<a [routerLink]="['/sessions/create']">Create session</a>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="cards">
+          <h2>Your Sessions</h2>
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let session of sessions" class="list-group-item">
+              <a [routerLink]="['/sessions', session.id]" class="nameSession">{{ session.name }}</a>
+              <button type="button" class="btn btn-outline-danger" (click)="delete(session.id, session.name)" style="float: right;">Delete</button>
+            </li>
+            <li class="list-group-item">
+                <a [routerLink]="['/sessions/create']"><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createSession" style="float: center;">Add Session</button></a>
+            </li>
+          </ul>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="cards">
+        <h2>Your Exercises</h2>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="cards">
+        <h2>Your Series</h2>
+      </div> 
+    </div>
+  </div>
+</div>
+
+<!-- <a [routerLink]="['/sessions/create']">Create session</a> -->

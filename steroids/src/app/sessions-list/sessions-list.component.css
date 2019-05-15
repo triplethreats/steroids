@@ -1,0 +1,41 @@
+.container {
+    height: 100%;
+}
+.row {
+    height: 100%;
+}
+.col-sm-4 {
+    height: 100%;
+    
+}
+
+.cards {
+    height: 100%;
+    background-color: #ffffff;
+    margin: 10px;
+    padding: 10px 10px 10px 10px;
+    border-radius: 15px;
+}
+
+h2 {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.nameSession:link {
+    text-decoration: none;
+    color: black;
+}
+
+.nameSession:hover {
+    text-decoration: none;
+    color: grey;
+}
+.nameSession:visited {
+    text-decoration: none;
+    color: black;
+}
+
+.modal-body {
+    margin: auto;
+}

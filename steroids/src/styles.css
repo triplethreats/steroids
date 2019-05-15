@@ -3,5 +3,10 @@ html,
 body {
   height: 100%;
   margin: 0;
-  font-family: 'Trebuchet MS', Arial, sans-serif
+  font-family: 'Trebuchet MS', Arial, sans-serif;
+  background: url(./image/background_homepage.jpg) no-repeat center center fixed;    
+  height: 92.3%;
+  position: relative;
+  width: 100%;
+  background-size: cover;
 }
