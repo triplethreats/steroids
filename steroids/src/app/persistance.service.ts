@@ -1,57 +1,59 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import IStorage from 'src/storage/IStorage';
 import Session from 'src/model/Session';
 import { Observable, Observer } from 'rxjs';
 import IndexedDbStorage from 'src/storage/IndexedDbStorage';
 import Exercice from 'src/model/Exercice';
 import Series from 'src/model/Series';
+import ILocalStorage from 'src/storage/ILocalStorage';
+import IRemoteStorage from 'src/storage/IRemoteStorage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersistanceService {
 
-  private storage: IStorage;
+  private localStorage: ILocalStorage;
+  private remoteStorage: IRemoteStorage;
 
   sessionsChanged: EventEmitter<Session[]>;
   exerciceTemplatesChanged: EventEmitter<Exercice[]>;
 
   constructor() {
-    this.storage = new IndexedDbStorage();
-    this.sessionsChanged = this.storage.sessionsChanged;
-    this.exerciceTemplatesChanged = this.storage.exerciceTemplatesChanged;
+    this.localStorage = new IndexedDbStorage();
+    this.sessionsChanged = this.localStorage.sessionsChanged;
+    this.exerciceTemplatesChanged = this.localStorage.exerciceTemplatesChanged;
   }
 
   getAllSessions(): Observable<Session[]> {
-    return this.storage.getAllSessions();
+    return this.localStorage.getAllSessions();
   }
 
   createSession(name: string): Observable<Session> {
-    return this.storage.createSession(name);
+    return this.localStorage.createSession(name);
   }
 
   getSession(id: string): Observable<Session> {
-    return this.storage.getSession(id);
+    return this.localStorage.getSession(id);
   }
 
   deleteSession(id: string): void {
-    this.storage.deleteSession(id).subscribe();
+    this.localStorage.deleteSession(id).subscribe();
   }
 
   addExercice(sessionId: string, name: string, comment: string): Observable<Exercice> {
-    return this.storage.addExercice(sessionId, name, comment);
+    return this.localStorage.addExercice(sessionId, name, comment);
   }
 
   getExercice(id: string): Observable<Exercice> {
-    return this.storage.getExercice(id);
+    return this.localStorage.getExercice(id);
   }
 
   deleteExercice(id: string): void {
-    this.storage.deleteExercice(id).subscribe();
+    this.localStorage.deleteExercice(id).subscribe();
   }
 
   deleteSerie(id: string): void {
-    this.storage.deleteSerie(id).subscribe();
+    this.localStorage.deleteSerie(id).subscribe();
   }
 
   addSerie(
@@ -59,14 +61,14 @@ export class PersistanceService {
     repetition: number,
     weight: number,
     rating: number): Observable<Series> {
-    return this.storage.addSeries(exerciceId, repetition, weight, rating);
+    return this.localStorage.addSeries(exerciceId, repetition, weight, rating);
   }
 
   getAllExercicesTemplates() {
-    return this.storage.getAllExerciceTemplates();
+    return this.localStorage.getAllExerciceTemplates();
   }
 
   dropLocalDatabase() {
-    this.storage.dropLocalDatabase().subscribe();
+    this.localStorage.dropLocalDatabase().subscribe();
   }
 }

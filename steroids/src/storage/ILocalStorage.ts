@@ -4,8 +4,7 @@ import Series from '../model/Series';
 import { Observable } from 'rxjs';
 import { EventEmitter } from '@angular/core';
 
-export default interface IStorage {
-
+export default interface ILocalStorage {
     sessionsChanged: EventEmitter<Session[]>;
     exerciceTemplatesChanged: EventEmitter<Exercice[]>;
 

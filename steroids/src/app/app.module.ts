@@ -13,6 +13,7 @@ import { AddExerciceComponent } from './add-exercice/add-exercice.component';
 import { SessionComponent } from './session/session.component';
 import { ExerciceComponent } from './exercice/exercice.component';
 import { AddSeriesComponent } from './add-series/add-series.component';
+import { HttpClientModule } from '@angular/common/http';
 
 const appRoutes: Routes = [
   { path: 'sessions', component: SessionsListComponent },
@@ -39,7 +40,8 @@ const appRoutes: Routes = [
     BrowserModule,
     AppRoutingModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

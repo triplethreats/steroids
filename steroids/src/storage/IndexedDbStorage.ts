@@ -6,7 +6,7 @@ import Series from 'src/model/Series';
 import * as uuid from 'uuid/v1';
 import { EventEmitter } from '@angular/core';
 
-export default class IndexedDbStorage implements IStorage {
+export default class IndexedDbStorage implements ILocalStorage {
 
     private version = 2;
 
