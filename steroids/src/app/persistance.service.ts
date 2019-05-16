@@ -69,4 +69,16 @@ export class PersistanceService {
   getAllExercicesTemplates() {
     return this.storage.getAllExerciceTemplates();
   }
+
+  updateSession(id: string, name: string) {
+    return this.storage.updateSession(id, name).subscribe();
+  }
+
+  updateExercice(id: string, name: string, comment: string) {
+    return this.storage.updateExercice(id, name, comment).subscribe();
+  }
+
+  updateSerie(id: string, repetition: number, weight: number, rating: number) {
+    return this.storage.updateSerie(id, repetition, weight, rating).subscribe();;
+  }
 }
