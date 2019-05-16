@@ -182,6 +182,25 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
+    getSerie(id: string): Observable<Series> {
+        return Observable.create((observer: Observer<Series>) => {
+            this.getAllSessions().subscribe(sessions => {
+                for (const sessionValue of sessions) {
+                    for (const exercice of sessionValue.exercices) {
+                        for (const serie of exercice.series) {
+                            if (serie.id === id) {
+                                observer.next(serie);
+                                observer.complete();
+                                return;
+                            }
+                        }
+                    }
+                }
+                observer.complete();
+            });
+        });
+    }
+
 
     deleteSerie(id: string): Observable<void> {
         return Observable.create((observer: Observer<void>) => {

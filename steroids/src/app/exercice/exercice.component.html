@@ -8,6 +8,7 @@
         <li>Rating: {{ series.rating }}</li>
       </ul>
       <button (click)="delete(series.id)">Delete</button>
+      <a [routerLink]="['/series/modify', series.id]"><button>Edit</button></a>
     </li>
   </ul>
   <app-add-series [exercice]="exercice"></app-add-series>
