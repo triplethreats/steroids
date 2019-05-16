@@ -10,6 +10,7 @@ export default interface ILocalStorage {
 
     getAllSessions(): Observable<Session[]>;
     createSession(name: string): Observable<Session>;
+    importSession(session: Session): Observable<Session>;
     updateSession(id: string, name: string): Observable<Session>;
     getSession(id: string): Observable<Session>;
     deleteSession(id: string): Observable<void>;

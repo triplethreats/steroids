@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 
 export default interface IRemoteStorage {
 
+    isOnline(): Observable<boolean>;
+
     getAllSessions(): Observable<Session[]>;
     createSession(session: Session): Observable<Session>;
     getSession(id: string): Observable<Session>;

@@ -4,6 +4,7 @@ export default class Session {
     id: string;
     name: string;
     date: Date;
+    updatedAt: Date;
     exercices: Exercice[];
 
     constructor(id: string, name: string) {

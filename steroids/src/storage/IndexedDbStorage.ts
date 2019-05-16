@@ -1,10 +1,10 @@
-import IStorage from './IStorage';
 import { Observable, Observer, observable } from 'rxjs';
 import Session from 'src/model/Session';
 import Exercice from 'src/model/Exercice';
 import Series from 'src/model/Series';
 import * as uuid from 'uuid/v1';
 import { EventEmitter } from '@angular/core';
+import ILocalStorage from './ILocalStorage';
 
 export default class IndexedDbStorage implements ILocalStorage {
 
@@ -111,7 +111,24 @@ export default class IndexedDbStorage implements ILocalStorage {
         });
     }
 
-
+    importSession(session: Session): Observable<Session> {
+        return Observable.create((observer: Observer<Session>) => {
+            this.open().subscribe((db: IDBDatabase) => {
+                const transaction = db.transaction(['sessions'], 'readwrite');
+                const sessionsStore = transaction.objectStore('sessions');
+                const request = sessionsStore.add(session, session.id);
+                request.onsuccess = _ => {
+                    observer.next(session);
+                    observer.complete();
+                    this.emitSessionsChanged();
+                };
+                request.onerror = _ => {
+                    console.error(request.error);
+                    observer.error(request.error);
+                };
+            });
+        });
+    }
 
     getSession(id: string): Observable<Session> {
         return Observable.create((observer: Observer<Session>) => {
@@ -120,8 +137,12 @@ export default class IndexedDbStorage implements ILocalStorage {
                 const sessionsStore = transaction.objectStore('sessions');
                 const request = sessionsStore.get(id);
                 request.onsuccess = _ => {
-                    observer.next(request.result);
-                    observer.complete();
+                    if (request.result) {
+                        observer.next(request.result);
+                        observer.complete();
+                    } else {
+                        observer.error('There is no session with ID ' + id);
+                    }
                 };
                 request.onerror = _ => {
                     console.error(request.error);

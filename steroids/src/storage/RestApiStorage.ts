@@ -2,19 +2,24 @@ import IRemoteStorage from './IRemoteStorage';
 import { Observable, Observer } from 'rxjs';
 import Exercice from 'src/model/Exercice';
 import Session from 'src/model/Session';
-import { EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 export default class RestApiStorage implements IRemoteStorage {
 
     private baseUrl = 'http://localhost:3000/';
 
-    sessionsChanged: EventEmitter<Session[]>;
-    exerciceTemplatesChanged: EventEmitter<Exercice[]>;
+    constructor(private http: HttpClient) { }
 
-    constructor(private http: HttpClient) {
-        this.sessionsChanged = new EventEmitter<Session[]>();
-        this.exerciceTemplatesChanged = new EventEmitter<Exercice[]>();
+    isOnline(): Observable<boolean> {
+        return Observable.create((observer: Observer<boolean>) => {
+            this.http.get(this.baseUrl + 'sessions').subscribe(_ => {
+                observer.next(true);
+                observer.complete();
+            }, _ => {
+                observer.next(false);
+                observer.complete();
+            });
+        });
     }
 
     getAllSessions(): Observable<Session[]> {

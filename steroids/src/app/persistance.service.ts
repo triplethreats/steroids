@@ -6,6 +6,9 @@ import Exercice from 'src/model/Exercice';
 import Series from 'src/model/Series';
 import ILocalStorage from 'src/storage/ILocalStorage';
 import IRemoteStorage from 'src/storage/IRemoteStorage';
+import RestApiStorage from 'src/storage/RestApiStorage';
+import { HttpClient } from '@angular/common/http';
+import { sync } from 'src/storage/synchronization';
 
 @Injectable({
   providedIn: 'root'
@@ -18,10 +21,17 @@ export class PersistanceService {
   sessionsChanged: EventEmitter<Session[]>;
   exerciceTemplatesChanged: EventEmitter<Exercice[]>;
 
-  constructor() {
+  constructor(private http: HttpClient) {
     this.localStorage = new IndexedDbStorage();
+    this.remoteStorage = new RestApiStorage(this.http);
     this.sessionsChanged = this.localStorage.sessionsChanged;
     this.exerciceTemplatesChanged = this.localStorage.exerciceTemplatesChanged;
+
+    this.remoteStorage.isOnline().subscribe(isOnline => {
+      if (isOnline) {
+        sync(this.localStorage, this.remoteStorage);
+      }
+    });
   }
 
   getAllSessions(): Observable<Session[]> {
@@ -53,7 +63,7 @@ export class PersistanceService {
   }
 
   getSerie(id: string): Observable<Series> {
-    return this.storage.getSerie(id);
+    return this.localStorage.getSerie(id);
   }
 
   deleteSerie(id: string): void {
@@ -77,14 +87,14 @@ export class PersistanceService {
   }
 
   updateSession(id: string, name: string) {
-    return this.storage.updateSession(id, name).subscribe();
+    return this.localStorage.updateSession(id, name).subscribe();
   }
 
   updateExercice(id: string, name: string, comment: string) {
-    return this.storage.updateExercice(id, name, comment).subscribe();
+    return this.localStorage.updateExercice(id, name, comment).subscribe();
   }
 
   updateSerie(id: string, repetition: number, weight: number, rating: number) {
-    return this.storage.updateSerie(id, repetition, weight, rating).subscribe();;
+    return this.localStorage.updateSerie(id, repetition, weight, rating).subscribe();;
   }
 }
