@@ -1,0 +1,10 @@
+<h4><i>Modify a new Session</i></h4>
+<div *ngIf="session">
+  <form [formGroup]="sessionForm" (ngSubmit)="modifySession()">
+    <label class="center-block">Name :
+      <input class="form-control" formControlName="name">
+    </label>
+    <br />
+    <button [disabled]="sessionForm.invalid" type="submit">Edit</button>
+  </form>
+</div>

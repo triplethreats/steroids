@@ -50,6 +50,10 @@ export class PersistanceService {
     this.storage.deleteExercice(id).subscribe();
   }
 
+  getSerie(id: string): Observable<Series> {
+    return this.storage.getSerie(id);
+  }
+
   deleteSerie(id: string): void {
     this.storage.deleteSerie(id).subscribe();
   }

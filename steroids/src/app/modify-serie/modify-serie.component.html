@@ -1,0 +1,16 @@
+<form [formGroup]="seriesForm" (ngSubmit)="modifySeries()">
+  Repetitions:<br>
+  <input type="number" formControlName="repetitions"><br>
+  Weight:<br>
+  <input type="number" formControlName="weight"><br>
+  Rating: (Rate your series between 1 and 5) <br>
+  <select formControlName="rating">
+    <option value="0">0</option>
+    <option value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+  <button [disabled]="seriesForm.invalid" type="submit">+</button>
+</form>
