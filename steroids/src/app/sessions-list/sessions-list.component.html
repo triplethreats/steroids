@@ -5,11 +5,40 @@
           <h2>Your Sessions</h2>
           <ul class="list-group list-group-flush">
             <li *ngFor="let session of sessions" class="list-group-item">
-              <a [routerLink]="['/sessions', session.id]" class="nameSession">{{ session.name }}</a>
-              <button type="button" class="btn btn-outline-danger" (click)="delete(session.id, session.name)" style="float: right;">Delete</button>
+              <a [routerLink]="['/sessions', session.id]" class="nameSession">
+                <div>
+                    {{ session.name }}
+                    <button type="button" class="btn btn-outline-danger" (click)="delete(session.id, session.name)" style="float: right;">Delete</button>    
+                    <a [routerLink]="['/sessions/modify', session.id]"><button>Edit</button></a>
+                </div>
+              </a>
             </li>
             <li class="list-group-item">
-                <a [routerLink]="['/sessions/create']"><button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createSession" style="float: center;">Add Session</button></a>
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createSession" style="float: center;">
+                  Add Session
+                </button>
+
+                <div class="modal fade" id="createSession">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                      <div class="modal-header">
+                        <h4 class="modal-title"><i>Create a new Session</i></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+
+                      <div class="modal-body mx-auto">
+                        <app-session-create></app-session-create>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                
             </li>
           </ul>
       </div>
