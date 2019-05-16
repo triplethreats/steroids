@@ -10,22 +10,17 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SessionComponent implements OnInit {
 
-  private sessionId: string;
-
   @Input()
   session: Session;
 
-  constructor(private persistanceService: PersistanceService, private router: ActivatedRoute) {
+  constructor(private persistanceService: PersistanceService) {
     this.persistanceService.sessionsChanged.subscribe(_ => {
       this.updateSession();
     });
   }
 
   ngOnInit() {
-    this.router.params.subscribe(param => {
-      this.sessionId = param.id;
-      this.updateSession();
-    });
+
   }
 
   delete(idExercise: string, nameExercise: string) {
@@ -36,7 +31,7 @@ export class SessionComponent implements OnInit {
   }
 
   private updateSession() {
-    this.persistanceService.getSession(this.sessionId)
+    this.persistanceService.getSession(this.session.id)
       .subscribe(session => this.session = session);
   }
 }

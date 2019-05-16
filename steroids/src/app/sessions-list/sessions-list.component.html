@@ -5,7 +5,7 @@
           <h2>Your Sessions</h2>
           <ul class="list-group list-group-flush">
             <li *ngFor="let session of sessions" class="list-group-item">
-              <a [routerLink]="['/sessions', session.id]" class="nameSession">
+              <a (click)="setSession(session)" class="nameSession">
                 <div>
                     {{ session.name }}
                     <button type="button" class="btn btn-outline-danger" (click)="delete(session.id, session.name)" style="float: right;">Delete</button>    
@@ -46,7 +46,8 @@
     <div class="col-sm-4">
       <div class="cards">
         <h2>Your Exercises</h2>
-        <ng-content select="[exercises]"></ng-content>
+        <app-session [session]="sessionSelected"></app-session>
+        <!-- <ng-content select="[exercises]"></ng-content> -->
       </div>
     </div>
     <div class="col-sm-4">

@@ -12,6 +12,8 @@ export class SessionsListComponent implements OnInit {
   @Input()
   sessions: Session[];
 
+  sessionSelected: Session;
+
   constructor(private persistance: PersistanceService) {
     this.persistance.sessionsChanged.subscribe(sessions => this.sessions = sessions);
   }
@@ -26,6 +28,11 @@ export class SessionsListComponent implements OnInit {
       this.updateSessions();
     }
   }
+
+  setSession(sessionClicked: Session) {
+    this.sessionSelected = sessionClicked;
+  }
+
   updateSessions() {
     this.persistance.getAllSessions().subscribe(
       sessions => this.sessions = sessions);
