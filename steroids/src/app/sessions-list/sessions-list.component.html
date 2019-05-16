@@ -1,7 +1,83 @@
-<ul>
-  <li *ngFor="let session of sessions">
-    <a [routerLink]="['/sessions', session.id]">{{ session.name }}</a>
-    <button (click)="delete(session.id)">Delete</button>
-  </li>
-</ul>
-<a [routerLink]="['/sessions/create']">Create session</a>
+<div class="container">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="cards">
+          <h2>Your Sessions</h2>
+          <ul class="list-group list-group-flush">
+            <li *ngFor="let session of sessions" class="list-group-item">
+              <a (click)="setSession(session)" class="nameSession">
+                <div style="margin: 10px">
+                    {{ session.name }}
+                </div>
+              </a>
+              <button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(session.id, session.name)" style="float: right; margin-top: 10px;">Delete</button>    
+              <!-- <a [routerLink]="['/sessions/modify', session.id]"><button type="button" class="btn btn-outline-primary btn-sm" style="float: left;">Edit</button></a> -->
+              <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editSession" style="float: left; margin-top: 10px;">
+                Edit
+              </button>
+
+              <div class="modal fade" id="editSession">
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content">
+
+                    <div class="modal-header">
+                      <h4 class="modal-title"><i>Edit the Session : {{ session.name }}</i></h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <div class="modal-body mx-auto">
+                      <app-modify-session [session]="session"></app-modify-session>
+                    </div>
+
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createSession" style="float: center; width: 100%;">
+                  Add Session
+                </button>
+
+                <div class="modal fade" id="createSession">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                      <div class="modal-header">
+                        <h4 class="modal-title"><i>Create a new Session</i></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      </div>
+
+                      <div class="modal-body mx-auto">
+                        <app-session-create></app-session-create>
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                
+            </li>
+          </ul>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="cards">        
+        <h2>Your Exercises</h2>
+        <app-session [session]="sessionSelected" #session></app-session>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div class="cards">
+        <h2>Your Series</h2>
+        <app-exercice [exercice]="session.exerciceSelected"></app-exercice>
+      </div> 
+    </div>
+  </div>
+</div>

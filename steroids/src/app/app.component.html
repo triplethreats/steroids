@@ -1,18 +1,13 @@
 <router-outlet>
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
         <ul class="navbar-nav">
-            <a class="navbar-brand" href="http://localhost:4200/">Training Book</a>
+            <a class="navbar-brand" routerLink="">Training Book</a>
             <li class="nav-item">
-                <a href="http://localhost:4200/" class="nav-link active">Home</a>
+                <a routerLink="/sessions" class="nav-link">Home</a>
             </li>
             <li class="nav-item">
-                <a routerLink="/sessions" class="nav-link">Create Session</a>
+                <a routerLink="/sessions" class="nav-link">Workout Training</a>
             </li>
         </ul>
     </nav>
-    <div id="home">
-        <div class="landing-text">
-            <h1>Welcome in your Training Book</h1>
-        </div>
-    </div>
 </router-outlet>

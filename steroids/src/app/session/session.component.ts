@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import Session from 'src/model/Session';
 import { PersistanceService } from '../persistance.service';
 import { ActivatedRoute } from '@angular/router';
+import Exercice from 'src/model/Exercice';
 
 @Component({
   selector: 'app-session',
@@ -10,31 +11,33 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class SessionComponent implements OnInit {
 
-  private sessionId: string;
-
   @Input()
   session: Session;
 
-  constructor(private persistanceService: PersistanceService, private router: ActivatedRoute) {
+  exerciceSelected: Exercice;
+
+  constructor(private persistanceService: PersistanceService) {
     this.persistanceService.sessionsChanged.subscribe(_ => {
       this.updateSession();
     });
   }
 
   ngOnInit() {
-    this.router.params.subscribe(param => {
-      this.sessionId = param.id;
+  }
+
+  setExercise(exercice: Exercice) {
+    this.exerciceSelected = exercice;
+  }
+
+  delete(idExercise: string, nameExercise: string) {
+    if(confirm("Are you sure to delete the exercise : " + nameExercise + " ?")) {
+      this.persistanceService.deleteExercice(idExercise);
       this.updateSession();
-    });
+    }
   }
 
-  delete(idExercise: string) {
-    this.persistanceService.deleteExercice(idExercise);
-    this.updateSession();
-
-  }
   private updateSession() {
-    this.persistanceService.getSession(this.sessionId)
+    this.persistanceService.getSession(this.session.id)
       .subscribe(session => this.session = session);
   }
 }
