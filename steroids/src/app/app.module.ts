@@ -19,14 +19,7 @@ import { ModifySessionComponent } from './modify-session/modify-session.componen
 import { ModifySerieComponent } from './modify-serie/modify-serie.component';
 
 const appRoutes: Routes = [
-  { path: 'sessions', component: SessionsListComponent },
-  { path: 'sessions/create', component: SessionCreateComponent },
-  { path: 'sessions/:id', component: SessionComponent },
-  { path: 'exercises/add', component: AddExerciceComponent },
-  { path: 'exercices/:id', component: ExerciceComponent },
-  { path: 'exercices/modify/:id', component: ModifyExerciceComponent },
-  { path: 'session/modify/:id', component: ModifySessionComponent },
-  { path: 'series/modify/:id', component: ModifySerieComponent }
+  { path: 'sessions', component: SessionsListComponent }
 ];
 
 @NgModule({
