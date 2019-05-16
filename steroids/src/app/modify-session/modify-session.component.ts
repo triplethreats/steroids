@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PersistanceService } from '../persistance.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import Session from 'src/model/Session';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-modify-session',
@@ -20,7 +21,7 @@ export class ModifySessionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private persistance: PersistanceService,
-    private router: ActivatedRoute) {
+    private router: ActivatedRoute, private location: Location) {
     this.sessionForm = this.fb.group({
       name: ['', Validators.required]
     });
@@ -43,6 +44,7 @@ export class ModifySessionComponent implements OnInit {
   modifySession() {
     const newName = this.sessionForm.value.name;
     //ici appeler la fonction update avec l ancien id et le nouveau nom
+    this.location.back();
   }
 
 }
