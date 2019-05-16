@@ -44,6 +44,7 @@ export class ModifySessionComponent implements OnInit {
   modifySession() {
     const newName = this.sessionForm.value.name;
     //ici appeler la fonction update avec l ancien id et le nouveau nom
+    this.persistance.updateSession(this.sessionId, newName);
     this.location.back();
   }
 

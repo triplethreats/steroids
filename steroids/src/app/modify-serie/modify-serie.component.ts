@@ -46,6 +46,7 @@ export class ModifySerieComponent implements OnInit {
     const newRepet = this.seriesForm.value.repetitions;
     const newWeight = this.seriesForm.value.weight;
     const newRating = this.seriesForm.value.rating;
+    this.persistance.updateSerie(this.serieId, newRepet, newWeight, newRating);
     // ici appeler fonction update avec comme parame ancien id, newRepet, newWeight, newRating
     this.location.back();
 

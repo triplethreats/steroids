@@ -54,7 +54,7 @@ export class ModifyExerciceComponent implements OnInit {
     const newName = this.exerciseForm.value.exerciseControl;
 
     const newRemarque = this.exerciseForm.value.remarque;
-
+    this.persistance.updateExercice(this.exerciceId, newName, newRemarque);
     // ici appeler fonction update avec comme parame ancien id, newName, newRemarque
     this.location.back();
   }

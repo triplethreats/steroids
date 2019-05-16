@@ -108,6 +108,8 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
+
+
     getSession(id: string): Observable<Session> {
         return Observable.create((observer: Observer<Session>) => {
             this.open().subscribe((db: IDBDatabase) => {
@@ -143,6 +145,26 @@ export default class IndexedDbStorage implements IStorage {
         });
     }
 
+    updateSession(id: string, name: string): Observable<Session> {
+        return Observable.create((observer: Observer<Session>) => {
+            this.getSession(id).subscribe(session => {
+                session.name = name;
+                this.open().subscribe(db => {
+                    const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
+                    const request = store.put(session, session.id);
+                    request.onsuccess = _ => {
+                        observer.next(session);
+                        observer.complete();
+                        this.emitSessionsChanged();
+                    };
+                    request.onerror = _ => {
+                        observer.error(request.error);
+                    };
+                });
+            });
+        });
+    }
+
     addExercice(sessionId: string, name: string, comment: string): Observable<Exercice> {
         return Observable.create((observer: Observer<Exercice>) => {
             this.getSession(sessionId).subscribe(session => {
@@ -161,6 +183,66 @@ export default class IndexedDbStorage implements IStorage {
                         observer.error(request.error);
                     };
                 });
+            });
+        });
+    }
+
+    updateExercice(id: string, name: string, remarque: string): Observable<Exercice> {
+        return Observable.create((observer: Observer<Exercice>) => {
+            this.getAllSessions().subscribe(sessions => {
+                for (const session of sessions) {
+                    for (const exercice of session.exercices) {
+                        if (exercice.id === id) {
+                            exercice.name = name;
+                            exercice.comment = remarque;
+                            this.open().subscribe(db => {
+                                const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
+                                const request = store.put(session, session.id);
+                                request.onsuccess = _ => {
+                                    observer.next(exercice);
+                                    observer.complete();
+                                    this.emitSessionsChanged();
+                                };
+                                request.onerror = _ => {
+                                    console.log(request.error);
+                                    observer.error(request.error);
+                                };
+                            });
+                        }
+                    }
+                }
+            });
+        });
+    }
+
+
+    updateSerie(id: string, repetition: number, weight: number, rating: number): Observable<Series> {
+        return Observable.create((observer: Observer<Series>) => {
+            this.getAllSessions().subscribe(sessions => {
+                for (const session of sessions) {
+                    for (const exercice of session.exercices) {
+                        for (const serie of exercice.series) {
+                            if (serie.id === id) {
+                                serie.repetition = repetition;
+                                serie.weight = weight;
+                                serie.rating = rating;
+                                this.open().subscribe(db => {
+                                    const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
+                                    const request = store.put(session, session.id);
+                                    request.onsuccess = _ => {
+                                        observer.next(serie);
+                                        observer.complete();
+                                        this.emitSessionsChanged();
+                                    };
+                                    request.onerror = _ => {
+                                        console.log(request.error);
+                                        observer.error(request.error);
+                                    };
+                                });
+                            }
+                        }
+                    }
+                }
             });
         });
     }
