@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output } from '@angular/core';
 import { PersistanceService } from '../persistance.service';
 import Session from 'src/model/Session';
+import Exercice from 'src/model/Exercice';
 
 @Component({
   selector: 'app-sessions-list',
@@ -17,13 +18,13 @@ export class SessionsListComponent implements OnInit {
   constructor(private persistance: PersistanceService) {
     this.persistance.sessionsChanged.subscribe(sessions => this.sessions = sessions);
   }
-
+  
   ngOnInit() {
     this.updateSessions();
   }
 
   delete(idSession: string, nameSession: string) {
-    if(confirm("Are you sure to delete the session : " + nameSession)) {
+    if(confirm("Are you sure to delete the session : " + nameSession + " ?")) {
       this.persistance.deleteSession(idSession);
       this.updateSessions();
     }
@@ -35,7 +36,11 @@ export class SessionsListComponent implements OnInit {
 
   updateSessions() {
     this.persistance.getAllSessions().subscribe(
-      sessions => this.sessions = sessions);
+      sessions => this.sessions = sessions); 
+  }
+
+  viewparent(exerciseSelected: Exercice){
+    console.log(exerciseSelected);
   }
 
 }

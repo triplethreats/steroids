@@ -12,7 +12,6 @@ import { Location } from '@angular/common';
 })
 export class ModifyExerciceComponent implements OnInit {
 
-  exerciceId: string;
   @Input()
   exercice: Exercice;
 
@@ -28,12 +27,8 @@ export class ModifyExerciceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.params.subscribe(params => {
-      this.exerciceId = params.id;
-      this.updateExercice();
-    });
+    this.updateExercice();
     this.updateExerciceTemplate();
-
   }
 
   updateExerciceTemplate() {
@@ -43,7 +38,7 @@ export class ModifyExerciceComponent implements OnInit {
   }
 
   private updateExercice() {
-    this.persistance.getExercice(this.exerciceId).subscribe(exercice => {
+    this.persistance.getExercice(this.exercice.id).subscribe(exercice => {
       this.exercice = exercice;
       this.exerciseForm.controls["remarque"].setValue(this.exercice.comment);
       this.exerciseForm.controls["exerciseControl"].setValue(this.exercice.name);
@@ -54,9 +49,9 @@ export class ModifyExerciceComponent implements OnInit {
     const newName = this.exerciseForm.value.exerciseControl;
 
     const newRemarque = this.exerciseForm.value.remarque;
-    this.persistance.updateExercice(this.exerciceId, newName, newRemarque);
+    this.persistance.updateExercice(this.exercice.id, newName, newRemarque);
     // ici appeler fonction update avec comme parame ancien id, newName, newRemarque
-    this.location.back();
+    // this.location.back();
   }
 
 }

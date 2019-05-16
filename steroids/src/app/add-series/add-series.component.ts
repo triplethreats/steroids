@@ -19,7 +19,7 @@ export class AddSeriesComponent implements OnInit {
     this.seriesForm = this.fb.group({
       repetitions: ['', [Validators.required]],
       weight: ['', [Validators.required]],
-      rating: ['', [Validators.required]]
+      rating: ['']
     });
   }
 

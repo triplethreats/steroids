@@ -1,20 +1,68 @@
-<!-- <app-sessions-list> -->
-  <div *ngIf="session" exercises class="cards">
-    <!-- <h1>{{session.name}}</h1> -->
-    <ul class="list-group list-group-flush">
-      <li *ngFor="let exercice of session.exercices" class="list-group-item">
-        <a [routerLink]="['/exercices', exercice.id]" class="nameExercice">{{ exercice.name }}</a>
-        <button type="button" class="btn btn-outline-danger" (click)="delete(exercice.id, exercice.name)" style="float: right;">Delete</button>
-        <a [routerLink]="['/exercices/modify', exercice.id]"><button>Edit</button></a>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">
-            <a>Remarque: {{ exercice.comment }}</a>
-          </li>
-        </ul>
-      </li>
-      <li class="list-group-item">
-        <app-add-exercice [session]="session"></app-add-exercice>
-      </li>
-    </ul>
-  </div>
-<!-- </app-sessions-list> -->
+<div *ngIf="session" exercises class="cards">
+  <ul class="list-group list-group-flush">
+    <li *ngFor="let exercice of session.exercices" class="list-group-item">
+      <a (click)="setExercise(exercice)" class="nameExercice">
+        <div>
+            {{ exercice.name }}
+        </div>
+      </a>
+      <ul class="list-group list-group-flush" *ngIf='exercice.comment != ""'>
+        <li class="list-group-item">
+          <a>Remarque: {{ exercice.comment }}</a>
+        </li>
+      </ul>
+
+      <button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(exercice.id, exercice.name)" style="float: right; margin-top: 10px;">Delete</button>
+      <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editExercice" style="float: left; margin-top: 10px;">
+        Edit
+      </button>
+
+      <div class="modal fade" id="editExercice">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+
+            <div class="modal-header">
+              <h4 class="modal-title"><i>Edit the Exercise : {{ exercice.name }}</i></h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body mx-auto">
+              <app-modify-exercice [exercice]="exercice"></app-modify-exercice>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </li>
+    <li class="list-group-item">
+        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addExercice" style="float: center; width: 100%;">
+          Add Exercise
+        </button>
+
+        <div class="modal fade" id="addExercice">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+              <div class="modal-header">
+                <h4 class="modal-title"><i>Add an Exercise</i></h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+
+              <div class="modal-body mx-auto">
+                <app-add-exercice [session]="session"></app-add-exercice>
+              </div>
+
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+    </li>
+  </ul>
+</div>

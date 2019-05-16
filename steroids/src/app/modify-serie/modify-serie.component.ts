@@ -14,7 +14,6 @@ import Series from 'src/model/Series';
 export class ModifySerieComponent implements OnInit {
 
   seriesForm: FormGroup;
-  serieId: string;
 
   @Input()
   serie: Series;
@@ -27,14 +26,11 @@ export class ModifySerieComponent implements OnInit {
     });
   }
   ngOnInit() {
-    this.router.params.subscribe(params => {
-      this.serieId = params.id;
-      this.updateSerie();
-    });
+    this.updateSerie();
   }
 
   private updateSerie() {
-    this.persistance.getSerie(this.serieId).subscribe(serie => {
+    this.persistance.getSerie(this.serie.id).subscribe(serie => {
       this.serie = serie;
       this.seriesForm.controls["repetitions"].setValue(this.serie.repetition);
       this.seriesForm.controls["weight"].setValue(this.serie.weight);
@@ -46,10 +42,7 @@ export class ModifySerieComponent implements OnInit {
     const newRepet = this.seriesForm.value.repetitions;
     const newWeight = this.seriesForm.value.weight;
     const newRating = this.seriesForm.value.rating;
-    this.persistance.updateSerie(this.serieId, newRepet, newWeight, newRating);
-    // ici appeler fonction update avec comme parame ancien id, newRepet, newWeight, newRating
-    this.location.back();
-
+    this.persistance.updateSerie(this.serie.id, newRepet, newWeight, newRating);
   }
 
 }

@@ -10,7 +10,6 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ExerciceComponent implements OnInit {
 
-  exerciceId: string;
   @Input()
   exercice: Exercice;
 
@@ -19,20 +18,17 @@ export class ExerciceComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.params.subscribe(params => {
-      this.exerciceId = params.id;
-      this.updateExercice();
-    });
   }
 
   delete(idSerie: string) {
-    this.persistance.deleteSerie(idSerie);
-    this.updateExercice();
-
+    if(confirm("Are you sure to delete this serie ?")) {
+      this.persistance.deleteSerie(idSerie);
+      this.updateExercice();
+    }
   }
 
   private updateExercice() {
-    this.persistance.getExercice(this.exerciceId).subscribe(exercice => {
+    this.persistance.getExercice(this.exercice.id).subscribe(exercice => {
       this.exercice = exercice;
     });
   }

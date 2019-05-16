@@ -13,7 +13,6 @@ import { Location } from '@angular/common';
 export class ModifySessionComponent implements OnInit {
 
   sessionForm: FormGroup;
-  sessionId: string;
 
   @Input()
   session: Session;
@@ -28,14 +27,11 @@ export class ModifySessionComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.router.params.subscribe(params => {
-      this.sessionId = params.id;
-      this.updateSession();
-    });
+    this.updateSession();
   }
 
   private updateSession() {
-    this.persistance.getSession(this.sessionId).subscribe(session => {
+    this.persistance.getSession(this.session.id).subscribe(session => {
       this.session = session;
       this.sessionForm.controls["name"].setValue(this.session.name);
     });
@@ -44,8 +40,7 @@ export class ModifySessionComponent implements OnInit {
   modifySession() {
     const newName = this.sessionForm.value.name;
     //ici appeler la fonction update avec l ancien id et le nouveau nom
-    this.persistance.updateSession(this.sessionId, newName);
+    this.persistance.updateSession(this.session.id, newName);
     this.location.back();
   }
-
 }

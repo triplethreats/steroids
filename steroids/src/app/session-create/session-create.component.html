@@ -1,10 +1,8 @@
-
   <form [formGroup]="sessionForm" (ngSubmit)="createSession()" formCreateSession>
     <div class="form-group">
-      <label class="center-block">Name :
-        <input class="form-control" formControlName="name">
-      </label>
-      <br />
-      <button class="btn btn-success" [disabled]="sessionForm.invalid" type="submit">Save</button>
+      <label for="name">Name</label>
+      <textarea formControlName="name" class="form-control" id="name"></textarea>
+
+      <button class="btn btn-outline-success" [disabled]="sessionForm.invalid" type="submit" style="margin-top: 10px;">Save</button>
     </div>
   </form>

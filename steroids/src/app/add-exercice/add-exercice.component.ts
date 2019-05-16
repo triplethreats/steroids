@@ -38,7 +38,6 @@ export class AddExerciceComponent implements OnInit {
 
   addExercice() {
     const exercice = this.exerciseForm.value.exerciseControl;
-    console.log(exercice);
     exercice.comment = this.exerciseForm.value.remarque;
     this.persistance.addExercice(this.session.id, exercice.name, exercice.comment).subscribe();
   }

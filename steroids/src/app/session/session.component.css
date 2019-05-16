@@ -9,6 +9,7 @@
 }
 
 .nameExercice:hover {
+    cursor: pointer;
     text-decoration: none;
     color: grey;
 }

@@ -1,10 +1,13 @@
 <form [formGroup]="exerciseForm" (ngSubmit)="addExercice()">
-  <select formControlName="exerciseControl">
-    <option value="" disabled>Selectionner un Exercice</option>
+  <select formControlName="exerciseControl" class="form-control" style="margin-bottom: 10px;">
+    <option value="" disabled selected>Selectionner un Exercice</option>
     <option *ngFor="let exercice of exerciceTemplates" [ngValue]="exercice">{{exercice.name}}</option>
   </select>
-  <label>Remarque:
-    <input formControlName="remarque">
-  </label>
-  <button [disabled]="exerciseForm.invalid" type="submit">+</button>
+
+  <div class="form-group">
+    <label for="remarque">Remarque</label>
+    <textarea formControlName="remarque" class="form-control" id="remarque" rows="3"></textarea>
+  </div>
+
+  <button [disabled]="exerciseForm.invalid" type="submit" class="btn btn-outline-success" style="margin-top:10px;">Add</button>
 </form>
