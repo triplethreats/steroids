@@ -18,7 +18,6 @@ export function sync(localStorage: ILocalStorage, remoteStorage: IRemoteStorage)
 
     remoteStorage.getAllSessions().subscribe(remoteSessions => {
         remoteSessions.forEach(remoteSession => {
-            console.log(remoteSession.id);
             localStorage.getSession(remoteSession.id).subscribe(_ => {}, _ => {
                 localStorage.importSession(remoteSession).subscribe();
             });

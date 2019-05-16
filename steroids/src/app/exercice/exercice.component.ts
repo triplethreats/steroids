@@ -28,8 +28,10 @@ export class ExerciceComponent implements OnInit {
   }
 
   private updateExercice() {
-    this.persistance.getExercice(this.exercice.id).subscribe(exercice => {
-      this.exercice = exercice;
-    });
+    if (this.exercice) {
+      this.persistance.getExercice(this.exercice.id).subscribe(exercice => {
+        this.exercice = exercice;
+      });
+    }
   }
 }

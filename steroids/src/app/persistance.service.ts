@@ -1,6 +1,6 @@
 import { Injectable, EventEmitter } from '@angular/core';
 import Session from 'src/model/Session';
-import { Observable, Observer } from 'rxjs';
+import { Observable, Observer, interval, timer } from 'rxjs';
 import IndexedDbStorage from 'src/storage/IndexedDbStorage';
 import Exercice from 'src/model/Exercice';
 import Series from 'src/model/Series';
@@ -9,6 +9,7 @@ import IRemoteStorage from 'src/storage/IRemoteStorage';
 import RestApiStorage from 'src/storage/RestApiStorage';
 import { HttpClient } from '@angular/common/http';
 import { sync } from 'src/storage/synchronization';
+import { startWith, switchMap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,13 @@ export class PersistanceService {
     this.sessionsChanged = this.localStorage.sessionsChanged;
     this.exerciceTemplatesChanged = this.localStorage.exerciceTemplatesChanged;
 
+    this.sync();
+
+    const syncTimer = timer(1000, 1000);
+    syncTimer.subscribe(_ => this.sync());
+  }
+
+  private sync(): void {
     this.remoteStorage.isOnline().subscribe(isOnline => {
       if (isOnline) {
         sync(this.localStorage, this.remoteStorage);

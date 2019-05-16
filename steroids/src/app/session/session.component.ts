@@ -37,7 +37,9 @@ export class SessionComponent implements OnInit {
   }
 
   private updateSession() {
-    this.persistanceService.getSession(this.session.id)
-      .subscribe(session => this.session = session);
+    if (this.session) {
+      this.persistanceService.getSession(this.session.id)
+        .subscribe(session => this.session = session);
+    }
   }
 }
