@@ -79,7 +79,9 @@ export default class IndexedDbStorage implements ILocalStorage {
                 request.onsuccess = _ => {
                     const sessions = new Array<Session>();
                     request.result.forEach(result => {
-                        sessions.push(result);
+                        if (!(result as Session).deleted) {
+                            sessions.push(result);
+                        }
                     });
                     observer.next(sessions);
                     observer.complete();
@@ -139,7 +141,7 @@ export default class IndexedDbStorage implements ILocalStorage {
                 const sessionsStore = transaction.objectStore('sessions');
                 const request = sessionsStore.get(id);
                 request.onsuccess = _ => {
-                    if (request.result) {
+                    if (request.result && !(request.result as Session).deleted) {
                         observer.next(request.result);
                         observer.complete();
                     } else {
@@ -156,17 +158,20 @@ export default class IndexedDbStorage implements ILocalStorage {
 
     deleteSession(id: string): Observable<void> {
         return Observable.create((observer: Observer<void>) => {
-            this.open().subscribe(db => {
-                const request = db.transaction(['sessions'], 'readwrite')
-                    .objectStore('sessions')
-                    .delete(id);
-                request.onsuccess = _ => {
-                    observer.complete();
-                };
-                request.onerror = _ => {
-                    console.error(request.error);
-                    observer.error(request.error);
-                };
+            this.getSession(id).subscribe(session => {
+                session.deleted = true;
+                session.updatedAt = new Date().toISOString();
+                this.open().subscribe(db => {
+                    const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
+                    const request = store.put(session, session.id);
+                    request.onsuccess = _ => {
+                        observer.complete();
+                        this.emitSessionsChanged();
+                    };
+                    request.onerror = _ => {
+                        observer.error(request.error);
+                    };
+                });
             });
         });
     }

@@ -34,10 +34,6 @@ export default class RestApiStorage implements IRemoteStorage {
         return this.http.get<Session>(this.baseUrl + 'sessions/' + id);
     }
 
-    deleteSession(id: string): Observable<void> {
-        return this.http.delete<void>(this.baseUrl + 'sessions/' + id);
-    }
-
     updateSession(session: Session): Observable<Session> {
         return this.http.put<Session>(this.baseUrl + 'sessions/' + session.id, session);
     }

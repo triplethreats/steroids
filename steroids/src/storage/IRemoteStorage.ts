@@ -9,7 +9,6 @@ export default interface IRemoteStorage {
     getAllSessions(): Observable<Session[]>;
     createSession(session: Session): Observable<Session>;
     getSession(id: string): Observable<Session>;
-    deleteSession(id: string): Observable<void>;
     updateSession(session: Session): Observable<Session>;
 
     getAllExerciceTemplates(): Observable<Exercice[]>;
