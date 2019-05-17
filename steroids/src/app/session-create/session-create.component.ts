@@ -1,9 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
-import Exercice from 'src/model/Exercice';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PersistanceService } from '../persistance.service';
-import Session from 'src/model/Session';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-session-create',
@@ -15,8 +12,7 @@ export class SessionCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private persistance: PersistanceService,
-    private router: Router)
+    private persistance: PersistanceService)
   {
     this.sessionForm = this.fb.group({
       name: ['', Validators.required ]
@@ -37,8 +33,6 @@ export class SessionCreateComponent implements OnInit {
 
     const modalBackdrop = document.getElementsByClassName("modal-backdrop");
     document.body.removeChild(modalBackdrop[0]);
-
-    // this.router.navigate(['/sessions']);
   }
 
 }

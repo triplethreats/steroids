@@ -2,7 +2,6 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { PersistanceService } from '../persistance.service';
 import Exercice from 'src/model/Exercice';
-import Series from 'src/model/Series';
 
 @Component({
   selector: 'app-add-series',
