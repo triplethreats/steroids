@@ -29,9 +29,6 @@ export class PersistanceService {
     this.exerciceTemplatesChanged = this.localStorage.exerciceTemplatesChanged;
 
     this.sync();
-
-    const syncTimer = timer(1000, 1000);
-    syncTimer.subscribe(_ => this.sync());
   }
 
   private sync(): void {
@@ -43,15 +40,11 @@ export class PersistanceService {
   }
 
   getAllSessions(): Observable<Session[]> {
-    return this.localStorage.getAllSessions().pipe(map(sessions => sessions.sort((a, b) => {
-      if (!a) {
-        return -1;
-      } else if (!b) {
-        return 1;
-      } else {
-        return Date.parse(a.createdAt) - Date.parse(b.createdAt);
-      }
-    })));
+    return this.localStorage.getAllSessions().pipe(
+      map(sessions => sessions.sort((a, b) =>
+        Date.parse(a.createdAt) - Date.parse(b.createdAt))
+      )
+    );
   }
 
   createSession(name: string): Observable<Session> {

@@ -7,6 +7,8 @@ import { AppRoutingModule } from '../app-routing.module';
 import { ActivatedRoute, Params } from '@angular/router';
 import { of } from 'rxjs';
 import { APP_BASE_HREF } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { ModifySerieComponent } from '../modify-serie/modify-serie.component';
 
 describe('ExerciceComponent', () => {
   let component: ExerciceComponent;
@@ -14,8 +16,8 @@ describe('ExerciceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ExerciceComponent, AddSeriesComponent ],
-      imports: [ ReactiveFormsModule, AppRoutingModule ],
+      declarations: [ ExerciceComponent, AddSeriesComponent, ModifySerieComponent ],
+      imports: [ ReactiveFormsModule, AppRoutingModule, HttpClientModule ],
       providers: [
         {
           provide: ActivatedRoute,

@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddExerciceComponent } from './add-exercice.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClient } from 'selenium-webdriver/http';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('AddExerciceComponent', () => {
   let component: AddExerciceComponent;
@@ -10,7 +12,7 @@ describe('AddExerciceComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [ AddExerciceComponent ],
-      imports: [ ReactiveFormsModule ]
+      imports: [ ReactiveFormsModule, HttpClientModule ]
     })
     .compileComponents();
   }));

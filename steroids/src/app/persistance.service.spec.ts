@@ -41,7 +41,7 @@ describe('PersistanceService', () => {
   it ('should enable to add exercices to a session', done => {
     const service: PersistanceService = TestBed.get(PersistanceService);
     service.createSession('testSession').subscribe(session => {
-      service.addExercice(session.id, 'testExercice').subscribe(exercice => {
+      service.addExercice(session.id, 'testExercice', '').subscribe(exercice => {
         service.getSession(session.id).subscribe(sessionWithExercice => {
           expect(sessionWithExercice.exercices.length).toEqual(1);
           expect(sessionWithExercice.exercices[0]).toEqual(exercice);
@@ -54,7 +54,7 @@ describe('PersistanceService', () => {
   it ('should enable to remove exercices from a session', done => {
     const service: PersistanceService = TestBed.get(PersistanceService);
     service.createSession('testSession').subscribe(session => {
-      service.addExercice(session.id, 'testExercice').subscribe(exercice => {
+      service.addExercice(session.id, 'testExercice', '').subscribe(exercice => {
         service.deleteExercice(exercice.id);
         service.getSession(session.id).subscribe(sessionWithExercice => {
           expect(sessionWithExercice.exercices.length).toEqual(0);
