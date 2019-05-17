@@ -27,24 +27,10 @@ h2 {
     height: 100%;
     width: 100%;
 }
-
-.nameSession:link {
-    text-decoration: none;
-    color: black;
-}
-
 .nameSession:hover {
     cursor: pointer;
     text-decoration: none;
     color: grey;
-}
-.nameSession:visited {
-    text-decoration: none;
-    color: black;
-}
-
-.modal-body {
-    margin: auto;
 }
 
 .divNameSession {

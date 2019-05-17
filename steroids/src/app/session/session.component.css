@@ -3,21 +3,9 @@
     width: 100%;
     overflow: auto;
 }
-.nameExercice:link {
-    text-decoration: none;
-    color: black;
-}
-
 .nameExercice:hover {
     cursor: pointer;
-    text-decoration: none;
-    color: grey;
 }
-.nameExercice:visited {
-    text-decoration: none;
-    color: black;
-}
-
 .divNameExercice {
     padding: 10px;
 }
