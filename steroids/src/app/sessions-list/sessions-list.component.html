@@ -4,7 +4,7 @@
       <div class="cards">
           <h2>Your Sessions</h2>
           <ul class="list-group list-group-flush" id="sessionList">
-            <li *ngFor="let session of sessions" class="list-group-item">
+            <li *ngFor="let session of sessions" class="list-group-item" [ngClass]="{selected: sessionSelected && session.id === sessionSelected.id}">
               <a (click)="setSession(session)" class="nameSession">
                 <div class="divNameSession">
                     {{ session.name }}

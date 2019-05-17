@@ -11,8 +11,19 @@ import Exercice from 'src/model/Exercice';
 })
 export class SessionComponent implements OnInit {
 
+  private _session: Session;
+
+  get session() {
+    return this._session;
+  }
+
   @Input()
-  session: Session;
+  set session(session: Session) {
+    if (session !== this._session) {
+      this.exerciceSelected = undefined;
+    }
+    this._session = session;
+  }
 
   exerciceSelected: Exercice;
   exercicetoEdit: Exercice;

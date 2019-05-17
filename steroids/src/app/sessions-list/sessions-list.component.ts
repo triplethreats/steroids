@@ -19,29 +19,29 @@ export class SessionsListComponent implements OnInit {
   constructor(private persistance: PersistanceService) {
     this.persistance.sessionsChanged.subscribe(sessions => this.sessions = sessions);
   }
-  
+
   ngOnInit() {
     this.updateSessions();
   }
 
   delete(idSession: string, nameSession: string) {
-    if(confirm("Are you sure to delete the session : " + nameSession + " ?")) {
+    if(confirm('Are you sure to delete the session: ' + nameSession + '?')) {
       this.persistance.deleteSession(idSession);
       this.updateSessions();
     }
   }
 
-  setSession(sessionClicked: Session, event) {
+  setSession(sessionClicked: Session) {
     this.sessionSelected = sessionClicked;
   }
 
-  getSessiontoEdit(session: Session){
+  getSessiontoEdit(session: Session) {
     this.sessiontoEdit = session;
   }
 
   updateSessions() {
     this.persistance.getAllSessions().subscribe(
-      sessions => this.sessions = sessions); 
+      sessions => this.sessions = sessions);
   }
 
 }

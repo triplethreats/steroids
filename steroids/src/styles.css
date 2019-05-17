@@ -10,3 +10,8 @@ body {
   width: 100%;
   background-size: cover;
 }
+
+.selected {
+  background-color: #343a40;
+  color: #fff;
+}

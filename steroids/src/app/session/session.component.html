@@ -1,16 +1,12 @@
 <div *ngIf="session" exercises class="cards">
   <ul class="list-group list-group-flush">
-    <li *ngFor="let exercice of session.exercices" class="list-group-item">
+    <li *ngFor="let exercice of session.exercices" class="list-group-item" [ngClass]="{selected: exerciceSelected && exercice.id === exerciceSelected.id}">
       <a (click)="setExercise(exercice)" class="nameExercice">
-        <div>
+        <div class="divNameExercice">
             {{ exercice.name }}
         </div>
       </a>
-      <ul class="list-group list-group-flush" *ngIf='exercice.comment != ""'>
-        <li class="list-group-item">
-          <a>Remarque: {{ exercice.comment }}</a>
-        </li>
-      </ul>
+      <p *ngIf='exercice.comment != ""'>Remarque: {{ exercice.comment }}</p>
 
       <button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(exercice.id, exercice.name)" style="float: right; margin-top: 10px;">Delete</button>
       <button type="button" (click)="getexercicetoEdit(exercice)" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editExercice" style="float: left; margin-top: 10px;">
