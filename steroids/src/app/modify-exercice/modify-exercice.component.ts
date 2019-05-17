@@ -50,8 +50,14 @@ export class ModifyExerciceComponent implements OnInit {
 
     const newRemarque = this.exerciseForm.value.remarque;
     this.persistance.updateExercice(this.exercice.id, newName, newRemarque);
-    // ici appeler fonction update avec comme parame ancien id, newName, newRemarque
-    // this.location.back();
+
+    const modalCreate = document.getElementById("editExercice")
+    modalCreate.classList.remove("show");
+    modalCreate.setAttribute("aria-hidden","true");
+    modalCreate.setAttribute("style","display: none");
+
+    const modalBackdrop = document.getElementsByClassName("modal-backdrop");
+    document.body.removeChild(modalBackdrop[0]);
   }
 
 }

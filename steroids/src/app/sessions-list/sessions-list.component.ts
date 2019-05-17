@@ -39,8 +39,4 @@ export class SessionsListComponent implements OnInit {
       sessions => this.sessions = sessions); 
   }
 
-  linkClicked(event) {
-    console.log(event.target);
-  }
-
 }

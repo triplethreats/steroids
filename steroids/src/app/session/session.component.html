@@ -16,53 +16,13 @@
       <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editExercice" style="float: left; margin-top: 10px;">
         Edit
       </button>
-
-      <div class="modal fade" id="editExercice">
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-
-            <div class="modal-header">
-              <h4 class="modal-title"><i>Edit the Exercise : {{ exercice.name }}</i></h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-
-            <div class="modal-body mx-auto">
-              <app-modify-exercice [exercice]="exercice"></app-modify-exercice>
-            </div>
-
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
-
-          </div>
-        </div>
-      </div>
+      <app-modify-exercice [exercice]="exercice"></app-modify-exercice>
     </li>
     <li class="list-group-item">
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addExercice" style="float: center; width: 100%;">
           Add Exercise
         </button>
-
-        <div class="modal fade" id="addExercice">
-          <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-
-              <div class="modal-header">
-                <h4 class="modal-title"><i>Add an Exercise</i></h4>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-              </div>
-
-              <div class="modal-body mx-auto">
-                <app-add-exercice [session]="session"></app-add-exercice>
-              </div>
-
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-              </div>
-
-            </div>
-          </div>
-        </div>
+        <app-add-exercice [session]="session"></app-add-exercice>
     </li>
   </ul>
 </div>

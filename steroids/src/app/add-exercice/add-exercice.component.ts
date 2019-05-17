@@ -40,6 +40,14 @@ export class AddExerciceComponent implements OnInit {
     const exercice = this.exerciseForm.value.exerciseControl;
     exercice.comment = this.exerciseForm.value.remarque;
     this.persistance.addExercice(this.session.id, exercice.name, exercice.comment).subscribe();
+
+    const modalCreate = document.getElementById("addExercice")
+    modalCreate.classList.remove("show");
+    modalCreate.setAttribute("aria-hidden","true");
+    modalCreate.setAttribute("style","display: none");
+
+    const modalBackdrop = document.getElementsByClassName("modal-backdrop");
+    document.body.removeChild(modalBackdrop[0]);
   }
 
 }

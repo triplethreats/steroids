@@ -39,8 +39,14 @@ export class ModifySessionComponent implements OnInit {
 
   modifySession() {
     const newName = this.sessionForm.value.name;
-    //ici appeler la fonction update avec l ancien id et le nouveau nom
     this.persistance.updateSession(this.session.id, newName);
-    this.location.back();
+
+    const modalCreate = document.getElementById("editSession")
+    modalCreate.classList.remove("show");
+    modalCreate.setAttribute("aria-hidden","true");
+    modalCreate.setAttribute("style","display: none");
+
+    const modalBackdrop = document.getElementsByClassName("modal-backdrop");
+    document.body.removeChild(modalBackdrop[0]);
   }
 }

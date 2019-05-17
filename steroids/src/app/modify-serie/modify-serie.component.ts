@@ -43,6 +43,14 @@ export class ModifySerieComponent implements OnInit {
     const newWeight = this.seriesForm.value.weight;
     const newRating = this.seriesForm.value.rating;
     this.persistance.updateSerie(this.serie.id, newRepet, newWeight, newRating);
+
+    const modalCreate = document.getElementById("editSerie")
+    modalCreate.classList.remove("show");
+    modalCreate.setAttribute("aria-hidden","true");
+    modalCreate.setAttribute("style","display: none");
+
+    const modalBackdrop = document.getElementsByClassName("modal-backdrop");
+    document.body.removeChild(modalBackdrop[0]);
   }
 
 }

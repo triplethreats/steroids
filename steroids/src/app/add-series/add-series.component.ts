@@ -31,5 +31,14 @@ export class AddSeriesComponent implements OnInit {
     const weight = this.seriesForm.value.weight;
     const rating = this.seriesForm.value.rating;
     this.persistance.addSerie(this.exercice.id, repetition, weight, rating).subscribe();
+
+    const modalCreate = document.getElementById("addSerie")
+    modalCreate.classList.remove("show");
+    modalCreate.setAttribute("aria-hidden","true");
+    modalCreate.setAttribute("style","display: none");
+
+    const modalBackdrop = document.getElementsByClassName("modal-backdrop");
+    document.body.removeChild(modalBackdrop[0]);
+    
   }
 }
