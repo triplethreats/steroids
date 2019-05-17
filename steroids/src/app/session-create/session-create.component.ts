@@ -29,7 +29,16 @@ export class SessionCreateComponent implements OnInit {
   createSession() {
     const formModel = this.sessionForm.value;
     this.persistance.createSession(formModel.name).subscribe();
-    this.router.navigate(['/sessions']);
+
+    const modalCreate = document.getElementById("createSession")
+    modalCreate.classList.remove("show");
+    modalCreate.setAttribute("aria-hidden","true");
+    modalCreate.setAttribute("style","display: none");
+
+    const modalBackdrop = document.getElementsByClassName("modal-backdrop");
+    document.body.removeChild(modalBackdrop[0]);
+
+    // this.router.navigate(['/sessions']);
   }
 
 }

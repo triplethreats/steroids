@@ -46,3 +46,11 @@ h2 {
 .modal-body {
     margin: auto;
 }
+
+.divNameSession {
+    margin: 10px;
+}
+
+.list-group-item:active {
+    background-color: #e5e5e5;
+}

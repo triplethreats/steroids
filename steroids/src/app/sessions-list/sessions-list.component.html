@@ -3,15 +3,14 @@
     <div class="col-sm-4">
       <div class="cards">
           <h2>Your Sessions</h2>
-          <ul class="list-group list-group-flush">
-            <li *ngFor="let session of sessions" class="list-group-item">
+          <ul class="list-group list-group-flush" id="sessionList">
+            <li *ngFor="let session of sessions" class="list-group-item" (click)="linkClicked($event)">
               <a (click)="setSession(session)" class="nameSession">
-                <div style="margin: 10px">
+                <div class="divNameSession">
                     {{ session.name }}
                 </div>
               </a>
-              <button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(session.id, session.name)" style="float: right; margin-top: 10px;">Delete</button>    
-              <!-- <a [routerLink]="['/sessions/modify', session.id]"><button type="button" class="btn btn-outline-primary btn-sm" style="float: left;">Edit</button></a> -->
+              <button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(session.id, session.name)" style="float: right; margin-top: 10px;">Delete</button> 
               <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editSession" style="float: left; margin-top: 10px;">
                 Edit
               </button>
@@ -42,7 +41,7 @@
                   Add Session
                 </button>
 
-                <div class="modal fade" id="createSession">
+                <!-- <div class="modal fade" id="createSession">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
 
@@ -51,9 +50,9 @@
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                       </div>
 
-                      <div class="modal-body mx-auto">
+                      <div class="modal-body mx-auto"> -->
                         <app-session-create></app-session-create>
-                      </div>
+                      <!-- </div>
 
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -61,7 +60,7 @@
 
                     </div>
                   </div>
-                </div>
+                </div> -->
                 
             </li>
           </ul>

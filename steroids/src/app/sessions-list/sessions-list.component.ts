@@ -30,7 +30,7 @@ export class SessionsListComponent implements OnInit {
     }
   }
 
-  setSession(sessionClicked: Session) {
+  setSession(sessionClicked: Session, event) {
     this.sessionSelected = sessionClicked;
   }
 
@@ -39,8 +39,8 @@ export class SessionsListComponent implements OnInit {
       sessions => this.sessions = sessions); 
   }
 
-  viewparent(exerciseSelected: Exercice){
-    console.log(exerciseSelected);
+  linkClicked(event) {
+    console.log(event.target);
   }
 
 }
