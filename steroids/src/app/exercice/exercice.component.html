@@ -8,10 +8,10 @@
         <li class="list-group-item" *ngIf='serie.rating!=""'>{{ serie.rating }}/5</li>
       </ul>
       <button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(serie.id, i)" style="float: right; margin-top: 10px;">Delete</button>
-      <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editSerie" style="float: left; margin-top: 10px;">
+      <button type="button" (click)="getSerietoEdit(serie)" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editSerie" style="float: left; margin-top: 10px;">
         Edit
       </button>
-      <app-modify-serie [serie]="serie"></app-modify-serie>
+      <app-modify-serie [serie]="serietoEdit" *ngIf='serietoEdit == serie'></app-modify-serie>
     </li>
     <li class="list-group-item">
       <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addSerie" style="float: center; width: 100%;">

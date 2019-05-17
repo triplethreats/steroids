@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import Exercice from 'src/model/Exercice';
 import { PersistanceService } from '../persistance.service';
 import { ActivatedRoute } from '@angular/router';
+import Series from 'src/model/Series';
 
 @Component({
   selector: 'app-exercice',
@@ -13,11 +14,17 @@ export class ExerciceComponent implements OnInit {
   @Input()
   exercice: Exercice;
 
+  serietoEdit: Series;
+
   constructor(private persistance: PersistanceService, private router: ActivatedRoute) {
     this.persistance.sessionsChanged.subscribe(_ => this.updateExercice());
   }
 
   ngOnInit() {
+  }
+
+  getSerietoEdit(serie: Series) {
+    this.serietoEdit = serie;
   }
 
   delete(idSerie: string) {

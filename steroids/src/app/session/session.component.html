@@ -13,10 +13,10 @@
       </ul>
 
       <button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(exercice.id, exercice.name)" style="float: right; margin-top: 10px;">Delete</button>
-      <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editExercice" style="float: left; margin-top: 10px;">
+      <button type="button" (click)="getexercicetoEdit(exercice)" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editExercice" style="float: left; margin-top: 10px;">
         Edit
       </button>
-      <app-modify-exercice [exercice]="exercice"></app-modify-exercice>
+      <app-modify-exercice [exercice]="exercicetoEdit" *ngIf='exercicetoEdit == exercice'></app-modify-exercice>
     </li>
     <li class="list-group-item">
         <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#addExercice" style="float: center; width: 100%;">

@@ -15,6 +15,7 @@ export class SessionComponent implements OnInit {
   session: Session;
 
   exerciceSelected: Exercice;
+  exercicetoEdit: Exercice;
 
   constructor(private persistanceService: PersistanceService) {
     this.persistanceService.sessionsChanged.subscribe(_ => {
@@ -27,6 +28,10 @@ export class SessionComponent implements OnInit {
 
   setExercise(exercice: Exercice) {
     this.exerciceSelected = exercice;
+  }
+
+  getexercicetoEdit(exercice: Exercice) {
+    this.exercicetoEdit = exercice;
   }
 
   delete(idExercise: string, nameExercise: string) {

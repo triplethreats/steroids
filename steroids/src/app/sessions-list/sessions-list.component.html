@@ -11,10 +11,10 @@
                 </div>
               </a>
               <button type="button" class="btn btn-outline-danger btn-sm" (click)="delete(session.id, session.name)" style="float: right; margin-top: 10px;">Delete</button> 
-              <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editSession" style="float: left; margin-top: 10px;">
+              <button type="button" (click)="getSessiontoEdit(session)" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editSession" style="float: left; margin-top: 10px;">
                 Edit
               </button>
-              <app-modify-session [session]="session"></app-modify-session>
+              <app-modify-session [session]="sessiontoEdit" *ngIf='sessiontoEdit == session'></app-modify-session>
             </li>
             <li class="list-group-item">
                 <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createSession" style="float: center; width: 100%;">
