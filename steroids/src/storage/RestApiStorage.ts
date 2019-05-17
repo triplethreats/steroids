@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 export default class RestApiStorage implements IRemoteStorage {
 
-    private baseUrl = 'http://localhost:3000/';
+    private baseUrl = 'http://skeggib.com:3000/';
 
     constructor(private http: HttpClient) { }
 

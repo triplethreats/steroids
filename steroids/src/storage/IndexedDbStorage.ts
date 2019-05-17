@@ -78,7 +78,9 @@ export default class IndexedDbStorage implements ILocalStorage {
                 const request = sessionsObjectStore.getAll();
                 request.onsuccess = _ => {
                     const sessions = new Array<Session>();
-                    request.result.forEach(result => sessions.push(result));
+                    request.result.forEach(result => {
+                        sessions.push(result);
+                    });
                     observer.next(sessions);
                     observer.complete();
                 };
@@ -173,6 +175,7 @@ export default class IndexedDbStorage implements ILocalStorage {
         return Observable.create((observer: Observer<Session>) => {
             this.getSession(id).subscribe(session => {
                 session.name = name;
+                session.updatedAt = new Date().toISOString();
                 this.open().subscribe(db => {
                     const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
                     const request = store.put(session, session.id);
@@ -195,6 +198,7 @@ export default class IndexedDbStorage implements ILocalStorage {
                 const id = uuid();
                 const exercice = new Exercice(id, name, comment);
                 session.exercices.push(exercice);
+                session.updatedAt = new Date().toISOString();
                 this.open().subscribe(db => {
                     const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
                     const request = store.put(session, session.id);
@@ -219,6 +223,7 @@ export default class IndexedDbStorage implements ILocalStorage {
                         if (exercice.id === id) {
                             exercice.name = name;
                             exercice.comment = remarque;
+                            session.updatedAt = new Date().toISOString();
                             this.open().subscribe(db => {
                                 const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
                                 const request = store.put(session, session.id);
@@ -250,6 +255,7 @@ export default class IndexedDbStorage implements ILocalStorage {
                                 serie.repetition = repetition;
                                 serie.weight = weight;
                                 serie.rating = rating;
+                                session.updatedAt = new Date().toISOString();
                                 this.open().subscribe(db => {
                                     const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
                                     const request = store.put(session, session.id);
@@ -311,16 +317,15 @@ export default class IndexedDbStorage implements ILocalStorage {
     deleteSerie(id: string): Observable<void> {
         return Observable.create((observer: Observer<void>) => {
             this.getAllSessions().subscribe(sessions => {
-                for (const sessionValue of sessions) {
-                    for (const exercice of sessionValue.exercices) {
+                for (const session of sessions) {
+                    for (const exercice of session.exercices) {
                         for (const serie of exercice.series) {
                             if (serie.id === id) {
-                                exercice.series.splice(
-                                    exercice.series.indexOf(serie),
-                                    1);
+                                exercice.series.splice(exercice.series.indexOf(serie), 1);
+                                session.updatedAt = new Date().toISOString();
                                 this.open().subscribe(db => {
                                     const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
-                                    const request = store.put(sessionValue, sessionValue.id);
+                                    const request = store.put(session, session.id);
                                     request.onsuccess = _ => {
                                         observer.complete();
                                         this.emitSessionsChanged();
@@ -352,9 +357,8 @@ export default class IndexedDbStorage implements ILocalStorage {
                     return;
                 }
                 session.exercices.splice(
-                    session.exercices.indexOf(session.exercices.find(exercice =>
-                        exercice.id === id)),
-                    1);
+                    session.exercices.indexOf(session.exercices.find(exercice => exercice.id === id)), 1);
+                session.updatedAt = new Date().toISOString();
                 this.open().subscribe(db => {
                     const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
                     const request = store.put(session, session.id);
@@ -380,6 +384,7 @@ export default class IndexedDbStorage implements ILocalStorage {
                             const id = uuid();
                             const series = new Series(id, repetition, weight, rating);
                             exercice.series.push(series);
+                            session.updatedAt = new Date().toISOString();
                             this.open().subscribe(db => {
                                 const store = db.transaction(['sessions'], 'readwrite').objectStore('sessions');
                                 const request = store.put(session, session.id);

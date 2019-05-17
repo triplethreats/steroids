@@ -9,7 +9,7 @@ import IRemoteStorage from 'src/storage/IRemoteStorage';
 import RestApiStorage from 'src/storage/RestApiStorage';
 import { HttpClient } from '@angular/common/http';
 import { sync } from 'src/storage/synchronization';
-import { startWith, switchMap } from 'rxjs/operators';
+import { startWith, switchMap, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +43,15 @@ export class PersistanceService {
   }
 
   getAllSessions(): Observable<Session[]> {
-    return this.localStorage.getAllSessions();
+    return this.localStorage.getAllSessions().pipe(map(sessions => sessions.sort((a, b) => {
+      if (!a) {
+        return -1;
+      } else if (!b) {
+        return 1;
+      } else {
+        return Date.parse(a.createdAt) - Date.parse(b.createdAt);
+      }
+    })));
   }
 
   createSession(name: string): Observable<Session> {

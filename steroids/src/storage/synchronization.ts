@@ -5,10 +5,11 @@ export function sync(localStorage: ILocalStorage, remoteStorage: IRemoteStorage)
     localStorage.getAllSessions().subscribe(localSessions => {
         localSessions.forEach(localSession => {
             remoteStorage.getSession(localSession.id).subscribe(remoteSession => {
-                if (localSession.updatedAt > remoteSession.updatedAt) {
+                if (Date.parse(localSession.updatedAt) > Date.parse(remoteSession.updatedAt)) {
                     remoteStorage.updateSession(localSession).subscribe();
-                } else if (remoteSession.updatedAt > localSession.updatedAt) {
-                    localStorage.updateSession(remoteSession.id, remoteSession.name).subscribe();
+                } else if (Date.parse(localSession.updatedAt) < Date.parse(remoteSession.updatedAt)) {
+                    localStorage.deleteSession(remoteSession.id).subscribe();
+                    localStorage.importSession(remoteSession).subscribe();
                 }
             }, _ => {
                 remoteStorage.createSession(localSession).subscribe();
