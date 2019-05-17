@@ -1,9 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { PersistanceService } from '../persistance.service';
-import { ActivatedRoute } from '@angular/router';
 import Exercice from 'src/model/Exercice';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Location } from '@angular/common';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-modify-exercice',
@@ -18,7 +16,7 @@ export class ModifyExerciceComponent implements OnInit {
   exerciceTemplates: Exercice[];
   exerciseForm: FormGroup;
 
-  constructor(private persistance: PersistanceService, private fb: FormBuilder, private router: ActivatedRoute, private location: Location) {
+  constructor(private persistance: PersistanceService, private fb: FormBuilder) {
     this.persistance.exerciceTemplatesChanged.subscribe(templates => this.exerciceTemplates = templates);
     this.exerciseForm = this.fb.group({
       exerciseControl: '',

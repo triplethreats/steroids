@@ -1,9 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import Exercice from 'src/model/Exercice';
 import { PersistanceService } from '../persistance.service';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
 import Series from 'src/model/Series';
 
 @Component({
@@ -18,7 +15,7 @@ export class ModifySerieComponent implements OnInit {
   @Input()
   serie: Series;
 
-  constructor(private persistance: PersistanceService, private fb: FormBuilder, private router: ActivatedRoute, private location: Location) {
+  constructor(private persistance: PersistanceService, private fb: FormBuilder) {
     this.seriesForm = this.fb.group({
       repetitions: ['', [Validators.required]],
       weight: ['', [Validators.required]],

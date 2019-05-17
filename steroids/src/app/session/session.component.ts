@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import Session from 'src/model/Session';
 import { PersistanceService } from '../persistance.service';
-import { ActivatedRoute } from '@angular/router';
 import Exercice from 'src/model/Exercice';
 
 @Component({

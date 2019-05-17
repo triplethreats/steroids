@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, Output } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { PersistanceService } from '../persistance.service';
 import Session from 'src/model/Session';
-import Exercice from 'src/model/Exercice';
 
 @Component({
   selector: 'app-sessions-list',
